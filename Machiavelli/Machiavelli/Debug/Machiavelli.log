@@ -1,0 +1,15 @@
+﻿Build started 09-Dec-15 10:08:30.
+     1>Project "D:\AVANS\Blok_14\CPP2\Eindopdracht machiavelli\Machiavelli\Machiavelli\Machiavelli.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"D:\AVANS\Blok_13\Eindopdracht_Alg_CPlusPlus\KerkersEnDraken\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Player.cpp main.cpp
+         main.cpp
+     1>d:\avans\blok_14\cpp2\eindopdracht machiavelli\machiavelli\machiavelli\clientcommand.h(19): error C2797: 'ClientCommand::cmd': list initialization inside member initializer list or non-static data member initializer is not implemented
+     1>d:\avans\blok_14\cpp2\eindopdracht machiavelli\machiavelli\machiavelli\player.hpp(17): error C2797: 'Player::name': list initialization inside member initializer list or non-static data member initializer is not implemented
+         Player.cpp
+     1>d:\avans\blok_14\cpp2\eindopdracht machiavelli\machiavelli\machiavelli\player.hpp(17): error C2797: 'Player::name': list initialization inside member initializer list or non-static data member initializer is not implemented
+         Generating Code...
+     1>Done Building Project "D:\AVANS\Blok_14\CPP2\Eindopdracht machiavelli\Machiavelli\Machiavelli\Machiavelli.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:01.59
