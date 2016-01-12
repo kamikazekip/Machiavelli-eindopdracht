@@ -11,6 +11,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include "Building.h"
 
 using namespace std;
 

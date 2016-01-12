@@ -4,8 +4,16 @@
 #include "Role.h"
 #include <memory>
 #include "Building.h"
+#include "ClientCommand.h"
+#include <iostream>
+#include "Socket.h"
 
 using namespace std;
+namespace machiavelli
+{
+	const int tcp_port{ 1080 };
+	const string prompt{ "machiavelli_client> " };
+}
 
 class Game
 {
@@ -17,5 +25,8 @@ private:
 public:
 	Game();
 	~Game();
+	void handleCommand( ClientCommand command, shared_ptr<Socket> client, shared_ptr<Player> player );
+	void addPlayer( shared_ptr<Player> player );
+	void removePlayer( shared_ptr<Player> player );
 };
 
