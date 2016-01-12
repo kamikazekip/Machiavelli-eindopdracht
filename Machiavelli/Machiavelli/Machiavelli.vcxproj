@@ -13,6 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2DBD438C-BD83-4FF1-BA8D-4DBE2E1A37A5}</ProjectGuid>
     <RootNamespace>Machiavelli</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -64,23 +65,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Architect.h" />
+    <ClInclude Include="Assassin.h" />
     <ClInclude Include="Building.h" />
     <ClInclude Include="ClientCommand.h" />
+    <ClInclude Include="Condottiere.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="King.h" />
+    <ClInclude Include="Merchant.h" />
     <ClInclude Include="Player.hpp" />
+    <ClInclude Include="Priest.h" />
     <ClInclude Include="Role.h" />
     <ClInclude Include="Socket.h" />
     <ClInclude Include="Sync_queue.h" />
+    <ClInclude Include="Thief.h" />
     <ClInclude Include="throw.h" />
+    <ClInclude Include="Wizard.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Architect.cpp" />
+    <ClCompile Include="Assassin.cpp" />
     <ClCompile Include="Building.cpp" />
+    <ClCompile Include="Condottiere.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="King.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Merchant.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Priest.cpp" />
     <ClCompile Include="Role.cpp" />
     <ClCompile Include="Socket.cpp" />
+    <ClCompile Include="Thief.cpp" />
     <ClCompile Include="throw.cpp" />
+    <ClCompile Include="Wizard.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

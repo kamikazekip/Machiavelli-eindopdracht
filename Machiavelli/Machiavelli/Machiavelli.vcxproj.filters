@@ -45,6 +45,30 @@
     <ClInclude Include="Role.h">
       <Filter>Header Files\Roles</Filter>
     </ClInclude>
+    <ClInclude Include="Thief.h">
+      <Filter>Header Files\Roles</Filter>
+    </ClInclude>
+    <ClInclude Include="Assassin.h">
+      <Filter>Header Files\Roles</Filter>
+    </ClInclude>
+    <ClInclude Include="Architect.h">
+      <Filter>Header Files\Roles</Filter>
+    </ClInclude>
+    <ClInclude Include="Condottiere.h">
+      <Filter>Header Files\Roles</Filter>
+    </ClInclude>
+    <ClInclude Include="Merchant.h">
+      <Filter>Header Files\Roles</Filter>
+    </ClInclude>
+    <ClInclude Include="King.h">
+      <Filter>Header Files\Roles</Filter>
+    </ClInclude>
+    <ClInclude Include="Priest.h">
+      <Filter>Header Files\Roles</Filter>
+    </ClInclude>
+    <ClInclude Include="Wizard.h">
+      <Filter>Header Files\Roles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -66,6 +90,30 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Role.cpp">
+      <Filter>Source Files\Roles</Filter>
+    </ClCompile>
+    <ClCompile Include="Thief.cpp">
+      <Filter>Source Files\Roles</Filter>
+    </ClCompile>
+    <ClCompile Include="Assassin.cpp">
+      <Filter>Source Files\Roles</Filter>
+    </ClCompile>
+    <ClCompile Include="Architect.cpp">
+      <Filter>Source Files\Roles</Filter>
+    </ClCompile>
+    <ClCompile Include="Condottiere.cpp">
+      <Filter>Source Files\Roles</Filter>
+    </ClCompile>
+    <ClCompile Include="King.cpp">
+      <Filter>Source Files\Roles</Filter>
+    </ClCompile>
+    <ClCompile Include="Merchant.cpp">
+      <Filter>Source Files\Roles</Filter>
+    </ClCompile>
+    <ClCompile Include="Wizard.cpp">
+      <Filter>Source Files\Roles</Filter>
+    </ClCompile>
+    <ClCompile Include="Priest.cpp">
       <Filter>Source Files\Roles</Filter>
     </ClCompile>
   </ItemGroup>
