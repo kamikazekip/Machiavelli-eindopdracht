@@ -68,6 +68,7 @@
     <ClInclude Include="Architect.h" />
     <ClInclude Include="Assassin.h" />
     <ClInclude Include="Building.h" />
+    <ClInclude Include="BuildingFactory.h" />
     <ClInclude Include="ClientCommand.h" />
     <ClInclude Include="Condottiere.h" />
     <ClInclude Include="Game.h" />
@@ -86,6 +87,7 @@
     <ClCompile Include="Architect.cpp" />
     <ClCompile Include="Assassin.cpp" />
     <ClCompile Include="Building.cpp" />
+    <ClCompile Include="BuildingFactory.cpp" />
     <ClCompile Include="Condottiere.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="King.cpp" />

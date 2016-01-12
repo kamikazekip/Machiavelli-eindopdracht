@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Roles">
       <UniqueIdentifier>{fc3ec426-5d7b-48e6-ae78-a26ff3acc190}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Buildings">
+      <UniqueIdentifier>{c55ba508-2f23-4e6c-938f-97d898c2aab0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Buildings">
+      <UniqueIdentifier>{0f2c1223-e8de-428e-89b0-41350504c959}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientCommand.h">
@@ -37,9 +43,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Building.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Role.h">
@@ -69,6 +72,12 @@
     <ClInclude Include="Wizard.h">
       <Filter>Header Files\Roles</Filter>
     </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Header Files\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildingFactory.h">
+      <Filter>Header Files\Buildings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -84,9 +93,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Building.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Role.cpp">
@@ -115,6 +121,12 @@
     </ClCompile>
     <ClCompile Include="Priest.cpp">
       <Filter>Source Files\Roles</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildingFactory.cpp">
+      <Filter>Source Files\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>Source Files\Buildings</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
