@@ -37,3 +37,6 @@
 *.log
 *.suo
 *.ilk
+
+Machiavelli/Debug
+Machiavelli/Debug/*
