@@ -8,8 +8,11 @@
 
 #ifndef Player_hpp
 #define Player_hpp
-
+#include <vector>
 #include <string>
+#include <memory>
+
+using namespace std;
 
 class Player {
 public:
@@ -18,9 +21,11 @@ public:
 	
 	std::string get_name() const { return name; }
 	void set_name(const std::string& new_name) { name = new_name; }
-	
+	vector<shared_ptr<Building>> table;
 private:
 	std::string name;
+	int gold;
+	vector<shared_ptr<Building>> hand;
 };
 
 #endif /* Player_hpp */
