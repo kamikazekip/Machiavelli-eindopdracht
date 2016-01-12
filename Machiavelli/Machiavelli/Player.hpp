@@ -11,14 +11,18 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include "Socket.h"
 #include "Building.h"
 
 using namespace std;
 
 class Player {
 public:
+	shared_ptr<Socket> client;
 	Player() {}
-	Player( const std::string& name ) : name{ name } { }
+	Player( const std::string& name, shared_ptr<Socket> client ) : name{ name }, client{ client }
+	{
+	}
 	
 	std::string get_name() const { return name; }
 	void set_name(const std::string& new_name) { name = new_name; }

@@ -31,7 +31,7 @@ void consume_command() // runs in its own thread
 			shared_ptr<Socket> client {command.get_client()};
 			shared_ptr<Player> player {command.get_player()};
 			try {
-				game.handleCommand( command, client, player );
+				game.handleCommand( command, player );
 			} catch (const exception& ex) {
 				cerr << "*** exception in consumer thread for player " << player->get_name() << ": " << ex.what() << '\n';
 				if (client->is_open()) {
@@ -56,7 +56,7 @@ void handle_client(shared_ptr<Socket> client) // this function runs in a separat
 		client->write("What's your name?\r\n");
         client->write(machiavelli::prompt);
 		string name {client->readline()};
-		shared_ptr<Player> player {new Player {name}};
+		shared_ptr<Player> player {new Player {name, client }};
 		game.addPlayer( player );
 		*client << "Welcome, " << name << ", have fun playing our game!\r\n" << machiavelli::prompt;
 
