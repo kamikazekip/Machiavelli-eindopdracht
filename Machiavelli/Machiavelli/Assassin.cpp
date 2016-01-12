@@ -10,3 +10,8 @@ Assassin::Assassin()
 Assassin::~Assassin()
 {
 }
+
+void Assassin::Action()
+{
+
+}

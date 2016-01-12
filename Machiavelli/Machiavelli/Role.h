@@ -11,6 +11,6 @@ private:
 public:
 	Role();
 	~Role();
-	void Action();
+	void virtual Action();
 };
 

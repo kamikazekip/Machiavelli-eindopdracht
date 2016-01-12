@@ -6,5 +6,6 @@ class Assassin : public Role
 public:
 	Assassin();
 	~Assassin();
+	void Action();
 };
 
