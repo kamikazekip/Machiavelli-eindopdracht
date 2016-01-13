@@ -57,9 +57,11 @@ void handle_client(shared_ptr<Socket> client) // this function runs in a separat
         client->write(machiavelli::prompt);
 		string name {client->readline()};
 		shared_ptr<Player> player {new Player {name, client }};
+
+		*client << "Welcome, " << name << ", have fun playing our game!\r\n\n";
 		game.addPlayer( player );
 		*client << "Welcome, " << name << ", have fun playing our game!\r\n" << machiavelli::prompt;
-		player->clear();
+
         while (true) { // game loop
             try {
                 // read first line of request

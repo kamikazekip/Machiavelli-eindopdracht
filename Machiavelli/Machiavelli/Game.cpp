@@ -34,13 +34,13 @@ void Game::handleCommand( ClientCommand command, shared_ptr<Player> player )
 		}
 		else
 		{
-			*player->client << "Sorry, " << player->get_name() << ", it is not your turn!" << machiavelli::endl;
+			*player << "Sorry, " << player->get_name() << ", it is not your turn!" << machiavelli::endl;
 		}
 	/*
 	}
 	else
 	{
-		*player->client << "Sorry, " << player->get_name() << ", we must wait until there are exactly 2 players in the game!" << machiavelli::endl;
+		*player << "Sorry, " << player->get_name() << ", we must wait until there are exactly 2 players in the game!" << machiavelli::endl;
 	} 
 	*/
 }
@@ -48,8 +48,26 @@ void Game::handleCommand( ClientCommand command, shared_ptr<Player> player )
 void Game::addPlayer( shared_ptr<Player> player )
 {
 	turn = player;
-	std::string message = player->get_name() + " joined the game!";
+	string message = player->get_name() + " joined the game!";
 	broadcast( message );
+
+	/* Initialise the player */
+	vector<shared_ptr<Building>> hand ( buildingStack.end() - 4, buildingStack.end() );
+	buildingStack.erase( buildingStack.end() - 4, buildingStack.end() );
+	player->addBuildings( hand );
+	int newGold = 2;
+	player->addGold( newGold );
+
+	std::ostringstream oss;
+	oss << newGold;
+
+	/* Give the player info */
+	*player << "You received the following buildings:" << "\r\n";
+	for( size_t c = 0; c < hand.size(); c++ )
+		*player << "  " << hand.at( c )->getTextRepresentation() << "\r\n";
+	*player << "You also received " << oss.str() << " pieces of gold!" << "\n" << machiavelli::endl;
+
+	/* Wrap up */
 	players.push_back( player );
 }
 
@@ -62,7 +80,7 @@ void Game::broadcast( string message )
 {
 	for( size_t c = 0; c < players.size(); c++ )
 	{
-		*players.at( c )->client << machiavelli::rn << message << machiavelli::endl;
+		*players.at( c ) << machiavelli::rn << message << machiavelli::endl;
 	}
 }
 

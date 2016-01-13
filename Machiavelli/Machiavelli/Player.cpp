@@ -10,6 +10,24 @@
 #include <Windows.h>
 using namespace std;
 
+const Player& Player::operator<<( const char c ) const
+{
+	client->write( c );
+	return *this;
+}
+
+const Player& Player::operator<<( const char* message ) const
+{
+	client->write( string{ message } );
+	return *this;
+}
+
+const Player& Player::operator<<( const string& message ) const
+{
+	client->write( message );
+	return *this;
+}
+
 void Player::addBuilding(shared_ptr<Building> building)
 {
 	hand.push_back( building );
@@ -21,20 +39,7 @@ void Player::addBuildings( vector<shared_ptr<Building>> buildings )
 		hand.push_back( buildings.at( c ) );
 }
 
-void Player::clear()
+void Player::addGold( int newGold )
 {
-	COORD topLeft = { 0, 0 };
-	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_SCREEN_BUFFER_INFO screen;
-	DWORD written;
-
-	GetConsoleScreenBufferInfo(console, &screen);
-	FillConsoleOutputCharacterA(
-		console, ' ', screen.dwSize.X * screen.dwSize.Y, topLeft, &written
-		);
-	FillConsoleOutputAttribute(
-		console, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE,
-		screen.dwSize.X * screen.dwSize.Y, topLeft, &written
-		);
-	SetConsoleCursorPosition(console, topLeft);
+	gold += newGold;
 }
