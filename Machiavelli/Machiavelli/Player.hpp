@@ -27,6 +27,8 @@ public:
 	std::string get_name() const { return name; }
 	void set_name(const std::string& new_name) { name = new_name; }
 	vector<shared_ptr<Building>> table;
+	void addBuildings(vector<shared_ptr<Building>> buildings);
+	void addBuilding( shared_ptr<Building> building );
 private:
 	std::string name;
 	int gold;

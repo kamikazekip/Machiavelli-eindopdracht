@@ -9,3 +9,13 @@
 #include "Player.hpp"
 using namespace std;
 
+void Player::addBuilding(shared_ptr<Building> building)
+{
+	hand.push_back( building );
+}
+
+void Player::addBuildings( vector<shared_ptr<Building>> buildings )
+{
+	for( int c = 0; c < buildings.size(); c++ )
+		hand.push_back( buildings.at( c ) );
+}

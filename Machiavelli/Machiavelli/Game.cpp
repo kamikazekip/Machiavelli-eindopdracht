@@ -5,6 +5,7 @@ Game::Game()
 {
 	unique_ptr<BuildingFactory> buildingFactory2{ new BuildingFactory() };
 	buildingFactory = std::move( buildingFactory2 );
+	buildingStack = buildingFactory->getStartBuildings();
 	commands.insert( pair<string, game_function>( "look", &Game::look ) );
 }
 

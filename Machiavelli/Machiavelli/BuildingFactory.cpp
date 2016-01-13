@@ -11,6 +11,7 @@ BuildingFactory::BuildingFactory()
 	{
 		while( getline( myfile, line ) )
 		{
+			vector<string> tokens;
 			string delimiter = ";";
 
 			size_t pos = 0;
@@ -19,9 +20,17 @@ BuildingFactory::BuildingFactory()
 			{
 				token = line.substr( 0, pos );
 				line.erase( 0, pos + delimiter.length() );
-
+				tokens.push_back( token );
 			}
+			shared_ptr<Building> building{ new Building( tokens[0], stoi( tokens[1] ), tokens[2] ) };
+			if( tokens.size() > 3 )
+			{
+				building->setDescription( tokens[3] );
+			}
+			buildings.push_back( building );
 		}
+		//Shuffle the card deck
+		std::random_shuffle( buildings.begin(), buildings.end() );
 		myfile.close();
 	}
 	else
@@ -32,4 +41,10 @@ BuildingFactory::BuildingFactory()
 BuildingFactory::~BuildingFactory()
 {
 
+}
+
+vector<shared_ptr<Building>> BuildingFactory::getStartBuildings()
+{
+
+	return buildings;
 }
