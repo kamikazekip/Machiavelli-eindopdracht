@@ -77,6 +77,7 @@
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="Priest.h" />
     <ClInclude Include="Role.h" />
+    <ClInclude Include="RoleFactory.h" />
     <ClInclude Include="Socket.h" />
     <ClInclude Include="Sync_queue.h" />
     <ClInclude Include="Thief.h" />
@@ -96,6 +97,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Priest.cpp" />
     <ClCompile Include="Role.cpp" />
+    <ClCompile Include="RoleFactory.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="Thief.cpp" />
     <ClCompile Include="throw.cpp" />

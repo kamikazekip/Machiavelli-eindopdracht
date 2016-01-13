@@ -78,6 +78,9 @@
     <ClInclude Include="BuildingFactory.h">
       <Filter>Header Files\Buildings</Filter>
     </ClInclude>
+    <ClInclude Include="RoleFactory.h">
+      <Filter>Header Files\Roles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -127,6 +130,9 @@
     </ClCompile>
     <ClCompile Include="Building.cpp">
       <Filter>Source Files\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="RoleFactory.cpp">
+      <Filter>Source Files\Roles</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
