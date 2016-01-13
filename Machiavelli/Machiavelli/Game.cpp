@@ -3,9 +3,11 @@
 
 Game::Game()
 {
-	unique_ptr<BuildingFactory> buildingFactory2{ new BuildingFactory() };
-	buildingFactory = std::move( buildingFactory2 );
+	buildingFactory = std::move(unique_ptr<BuildingFactory> { new BuildingFactory() });
+	roleFactory = std::move(unique_ptr<RoleFactory> {new RoleFactory()});
 	buildingStack = buildingFactory->getStartBuildings();
+	rolePool = roleFactory->getRoles();
+	roles = roleFactory->getRoles();
 	commands.insert( pair<string, game_function>( "look", &Game::look ) );
 }
 

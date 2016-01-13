@@ -4,6 +4,7 @@
 #include "Role.h"
 #include <memory>
 #include "Building.h"
+#include "RoleFactory.h"
 #include "BuildingFactory.h"
 #include <string>
 #include <map>
@@ -34,6 +35,7 @@ private:
 	vector<shared_ptr<Role>> rolePool;
 	vector<shared_ptr<Building>> buildingStack;
 	unique_ptr<BuildingFactory> buildingFactory;
+	unique_ptr<RoleFactory> roleFactory;
 public:
 	Game();
 	~Game();
