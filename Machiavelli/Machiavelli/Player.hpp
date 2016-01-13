@@ -14,6 +14,7 @@
 #include "Socket.h"
 #include "Building.h"
 
+
 using namespace std;
 
 class Player {
@@ -29,6 +30,7 @@ public:
 	vector<shared_ptr<Building>> table;
 	void addBuildings(vector<shared_ptr<Building>> buildings);
 	void addBuilding( shared_ptr<Building> building );
+	void clear();
 private:
 	std::string name;
 	int gold;
