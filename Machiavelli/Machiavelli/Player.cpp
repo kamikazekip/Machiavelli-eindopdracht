@@ -7,7 +7,24 @@
 //
 
 #include "Player.hpp"
-using namespace std;
+
+const Player& Player::operator<<( const char c ) const
+{
+	client->write( c );
+	return *this;
+}
+
+const Player& Player::operator<<( const char* message ) const
+{
+	client->write( string{ message } );
+	return *this;
+}
+
+const Player& Player::operator<<( const string& message ) const
+{
+	client->write( message );
+	return *this;
+}
 
 void Player::addBuilding(shared_ptr<Building> building)
 {
