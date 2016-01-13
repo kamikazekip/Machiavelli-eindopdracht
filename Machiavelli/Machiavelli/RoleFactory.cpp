@@ -51,7 +51,7 @@ void RoleFactory::fillRoleMap()
 {
 	roleMap.insert(pair<string, shared_ptr<Role>>("Moordenaar", shared_ptr<Role> { new Assassin() }));
 	roleMap.insert(pair<string, shared_ptr<Role>>("Dief", shared_ptr<Role> { new Thief() }));
-	roleMap.insert(pair<string, shared_ptr<Role>>("Magiër", shared_ptr<Role> { new Wizard() }));
+	roleMap.insert(pair<string, shared_ptr<Role>>("Magier", shared_ptr<Role> { new Wizard() }));
 	roleMap.insert(pair<string, shared_ptr<Role>>("Koning", shared_ptr<Role> { new King() }));
 	roleMap.insert(pair<string, shared_ptr<Role>>("Prediker", shared_ptr<Role> { new Priest() }));
 	roleMap.insert(pair<string, shared_ptr<Role>>("Koopman", shared_ptr<Role> { new Merchant() }));
