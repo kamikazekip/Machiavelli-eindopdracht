@@ -11,6 +11,7 @@
 
 RoleFactory::RoleFactory()
 {
+	fillRoleMap();
 	rolesFile = "../Machiavelli/Karakterkaarten.csv";
 	ifstream myfile(rolesFile);
 	string line;
