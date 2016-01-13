@@ -19,6 +19,7 @@ private:
 	map<string, shared_ptr<Role>> roleMap;
 public:
 	RoleFactory();
+	vector<shared_ptr<Role>> getRoles();
 	~RoleFactory();
 };
 
