@@ -31,12 +31,13 @@ class Game
 private:
 	map<string, game_function> commands;
 	shared_ptr<Player> turn;
+	shared_ptr<Player> king;
 	vector<shared_ptr<Player>> players;
 	vector<shared_ptr<Role>> roles;
-	vector<shared_ptr<Role>> rolePool;
 	vector<shared_ptr<Building>> buildingStack;
 	unique_ptr<BuildingFactory> buildingFactory;
-	unique_ptr<RoleFactory> roleFactory;
+	void gameStart();
+	void choseRoles();
 public:
 	Game();
 	~Game();
