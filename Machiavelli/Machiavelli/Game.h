@@ -4,6 +4,7 @@
 #include "Role.h"
 #include <memory>
 #include "Building.h"
+#include "BuildingFactory.h"
 #include <string>
 #include <map>
 #include "ClientCommand.h"
@@ -13,7 +14,7 @@
 using namespace std;
 class Game;
 
-typedef void ( Game::*game_function )( );
+typedef void ( Game::*game_function )( shared_ptr<Player> player );
 
 namespace machiavelli
 {
@@ -32,7 +33,7 @@ private:
 	vector<shared_ptr<Role>> roles;
 	vector<shared_ptr<Role>> rolePool;
 	vector<shared_ptr<Building>> buildingStack;
-
+	unique_ptr<BuildingFactory> buildingFactory;
 public:
 	Game();
 	~Game();
@@ -40,6 +41,6 @@ public:
 	void addPlayer( shared_ptr<Player> player );
 	void removePlayer( shared_ptr<Player> player );
 	void broadcast( string message );
-	void look();
+	void look( shared_ptr<Player> player );
 };
 
