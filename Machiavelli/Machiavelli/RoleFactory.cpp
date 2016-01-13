@@ -8,7 +8,6 @@
 #include "Architect.h"
 #include "Merchant.h"
 
-
 RoleFactory::RoleFactory()
 {
 	fillRoleMap();

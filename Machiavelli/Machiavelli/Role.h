@@ -16,5 +16,6 @@ public:
 	~Role();
 	void virtual Action();
 	void setNameTurn(string name, int turn);
+	string getName();
 };
 

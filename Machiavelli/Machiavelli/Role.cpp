@@ -20,3 +20,8 @@ void Role::setNameTurn(string name, int turn)
 	this->name = name;
 	this->turn = turn;
 }
+
+string Role::getName()
+{
+	return name;
+}
