@@ -52,13 +52,13 @@ void consume_command() // runs in its own thread
 void handle_client(shared_ptr<Socket> client) // this function runs in a separate thread
 {
     try {
-        client->write("Welcome to Server 1.0! To quit, type 'quit'.\r\n");
-		client->write("What's your name?\r\n");
+        client->write("Welcome bij Server 1.0! Om te stoppen, type 'quit'.\r\n");
+		client->write("Wat is je naam?\r\n");
         client->write(machiavelli::prompt);
 		string name {client->readline()};
 		shared_ptr<Player> player {new Player {name, client }};
 
-		*client << "Welcome, " << name << ", have fun playing our game!\r\n\n";
+		*client << "Welkom, " << name << ", veel plezier met onze versie van Machiavelli!\r\n\n";
 		game.addPlayer( player );
 
         while (true) { // game loop
