@@ -49,11 +49,25 @@ void Game::addPlayer( shared_ptr<Player> player )
 {
 	turn = player;
 	string message = player->get_name() + " joined the game!";
+	broadcast( message );
+
+	/* Initialise the player */
 	vector<shared_ptr<Building>> hand ( buildingStack.end() - 4, buildingStack.end() );
 	buildingStack.erase( buildingStack.end() - 4, buildingStack.end() );
 	player->addBuildings( hand );
-	broadcast( message );
-	*player << "You received the following cards:" << machiavelli::endl;
+	int newGold = 2;
+	player->addGold( newGold );
+
+	std::ostringstream oss;
+	oss << newGold;
+
+	/* Give the player info */
+	*player << "You received the following buildings:" << "\r\n";
+	for( size_t c = 0; c < hand.size(); c++ )
+		*player << "  " << hand.at( c )->getTextRepresentation() << "\r\n";
+	*player << "You also received " << oss.str() << " pieces of gold!" << "\n" << machiavelli::endl;
+
+	/* Wrap up */
 	players.push_back( player );
 }
 

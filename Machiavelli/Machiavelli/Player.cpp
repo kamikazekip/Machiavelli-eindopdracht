@@ -36,3 +36,8 @@ void Player::addBuildings( vector<shared_ptr<Building>> buildings )
 	for( int c = 0; c < buildings.size(); c++ )
 		hand.push_back( buildings.at( c ) );
 }
+
+void Player::addGold( int newGold )
+{
+	gold += newGold;
+}

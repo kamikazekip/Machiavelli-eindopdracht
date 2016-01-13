@@ -58,7 +58,7 @@ void handle_client(shared_ptr<Socket> client) // this function runs in a separat
 		string name {client->readline()};
 		shared_ptr<Player> player {new Player {name, client }};
 
-		*client << "Welcome, " << name << ", have fun playing our game!\r\n";
+		*client << "Welcome, " << name << ", have fun playing our game!\r\n\n";
 		game.addPlayer( player );
 		
 

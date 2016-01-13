@@ -30,6 +30,7 @@ public:
 	vector<shared_ptr<Building>> table;
 	void addBuildings(vector<shared_ptr<Building>> buildings);
 	void addBuilding( shared_ptr<Building> building );
+	void addGold( int newGold );
 
 	const Player& operator<<( const char c ) const;
 	const Player& operator<<( const char* message ) const;
