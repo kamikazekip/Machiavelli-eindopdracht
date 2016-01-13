@@ -29,8 +29,6 @@ BuildingFactory::BuildingFactory()
 			}
 			buildings.push_back( building );
 		}
-		//Shuffle the card deck
-		std::random_shuffle( buildings.begin(), buildings.end() );
 		myfile.close();
 	}
 	else

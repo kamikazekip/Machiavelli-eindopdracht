@@ -1,11 +1,15 @@
 #include "Game.h"
 #include <algorithm> 
-
+#include <cstdlib>
+#include <ctime>
 Game::Game()
 {
+	srand(time(NULL));
 	buildingFactory = std::move(unique_ptr<BuildingFactory> { new BuildingFactory() });
 	roleFactory = std::move(unique_ptr<RoleFactory> {new RoleFactory()});
 	buildingStack = buildingFactory->getStartBuildings();
+	//Shuffle the card deck
+	std::random_shuffle(buildingStack.begin(), buildingStack.end());
 	rolePool = roleFactory->getRoles();
 	roles = roleFactory->getRoles();
 	commands.insert( pair<string, game_function>( "look", &Game::look ) );

@@ -11,6 +11,7 @@
 #include "ClientCommand.h"
 #include <iostream>
 #include "Socket.h"
+#include <random>
 
 using namespace std;
 class Game;
@@ -44,5 +45,6 @@ public:
 	void removePlayer( shared_ptr<Player> player );
 	void broadcast( string message );
 	void look( shared_ptr<Player> player );
+
 };
 
