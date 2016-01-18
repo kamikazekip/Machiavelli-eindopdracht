@@ -189,7 +189,7 @@ void Game::removeRole( shared_ptr<Player> player )
 void Game::nextSegment() {
 	if (sequence.size() < 1)
 	{
-		//die ene functie aan;
+		startPlayRound();
 		return;
 	}
 	pair<sequence_function, shared_ptr<Player>> segment = sequence[0];

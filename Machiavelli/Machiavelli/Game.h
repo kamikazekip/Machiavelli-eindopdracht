@@ -53,6 +53,7 @@ private:
 	void removeRole( shared_ptr<Player> player );
 	void pickRole( shared_ptr<Player> player );
 	void nextSegment();
+	void startPlayRound();
 public:
 	Game();
 	~Game();
