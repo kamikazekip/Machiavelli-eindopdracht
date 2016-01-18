@@ -149,7 +149,7 @@ void Game::pickedRole(shared_ptr<Role> choice )
 
 void Game::removedRole(shared_ptr<Role> choice)
 {
-	*turn << "Je hebt nu de: " << choice->getName() << "weg gelegd!" << machiavelli::endl;
+	*turn << "Je hebt nu de: " << choice->getName() << " weg gelegd!" << machiavelli::endl;
 	rolePool.erase(std::remove(rolePool.begin(), rolePool.end(), choice), rolePool.end());
 	nextSegment();
 }
@@ -193,7 +193,7 @@ void Game::nextSegment() {
 		return;
 	}
 	pair<sequence_function, shared_ptr<Player>> segment = sequence[0];
-	sequence.erase(std::remove(sequence.begin(), sequence.end(), segment), sequence.end());
+	sequence.erase(sequence.begin(), sequence.begin() + 1);
 	sequence_function function = segment.first;
 	shared_ptr<Player> player = segment.second;
 	(this->*(function))(player);
