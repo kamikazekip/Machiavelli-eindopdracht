@@ -7,10 +7,11 @@
 #include "Wizard.h"
 #include "Architect.h"
 #include "Merchant.h"
+#include "Game.h"
 
-RoleFactory::RoleFactory()
+RoleFactory::RoleFactory(Game game)
 {
-	fillRoleMap();
+	fillRoleMap(game);
 	rolesFile = "../Machiavelli/Karakterkaarten.csv";
 	ifstream myfile(rolesFile);
 	string line;
@@ -46,16 +47,17 @@ RoleFactory::~RoleFactory()
 {
 }
 
-void RoleFactory::fillRoleMap()
+void RoleFactory::fillRoleMap(Game game)
 {
-	roleMap.insert(pair<string, shared_ptr<Role>>("Moordenaar", shared_ptr<Role> { new Assassin() }));
-	roleMap.insert(pair<string, shared_ptr<Role>>("Dief", shared_ptr<Role> { new Thief() }));
-	roleMap.insert(pair<string, shared_ptr<Role>>("Magier", shared_ptr<Role> { new Wizard() }));
-	roleMap.insert(pair<string, shared_ptr<Role>>("Koning", shared_ptr<Role> { new King() }));
-	roleMap.insert(pair<string, shared_ptr<Role>>("Prediker", shared_ptr<Role> { new Priest() }));
-	roleMap.insert(pair<string, shared_ptr<Role>>("Koopman", shared_ptr<Role> { new Merchant() }));
-	roleMap.insert(pair<string, shared_ptr<Role>>("Bouwmeester", shared_ptr<Role> { new Architect() }));
-	roleMap.insert(pair<string, shared_ptr<Role>>("Condottiere", shared_ptr<Role> { new Assassin() }));
+	shared_ptr<Game> gamePointer = shared_ptr<Game>{ game };
+	roleMap.insert(pair<string, shared_ptr<Role>>("Moordenaar", shared_ptr<Role> { new Assassin(gamePointer) }));
+	roleMap.insert(pair<string, shared_ptr<Role>>("Dief", shared_ptr<Role> { new Thief(gamePointer) }));
+	roleMap.insert(pair<string, shared_ptr<Role>>("Magier", shared_ptr<Role> { new Wizard(gamePointer) }));
+	roleMap.insert(pair<string, shared_ptr<Role>>("Koning", shared_ptr<Role> { new King(gamePointer) }));
+	roleMap.insert(pair<string, shared_ptr<Role>>("Prediker", shared_ptr<Role> { new Priest(gamePointer) }));
+	roleMap.insert(pair<string, shared_ptr<Role>>("Koopman", shared_ptr<Role> { new Merchant(gamePointer) }));
+	roleMap.insert(pair<string, shared_ptr<Role>>("Bouwmeester", shared_ptr<Role> { new Architect(gamePointer) }));
+	roleMap.insert(pair<string, shared_ptr<Role>>("Condottiere", shared_ptr<Role> { new Assassin(gamePointer) }));
 }
 
 vector<shared_ptr<Role>> RoleFactory::getRoles()

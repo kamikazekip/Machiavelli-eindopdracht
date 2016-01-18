@@ -2,7 +2,7 @@
 
 
 
-Thief::Thief()
+Thief::Thief(shared_ptr<Game> game) : Role(game)
 {
 }
 

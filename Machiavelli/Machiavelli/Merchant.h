@@ -4,7 +4,7 @@
 class Merchant : public Role
 {
 public:
-	Merchant();
+	Merchant(shared_ptr<Game> game);
 	~Merchant();
 };
 

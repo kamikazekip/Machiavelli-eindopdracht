@@ -120,7 +120,7 @@ void Game::gameStart()
 
 void Game::chooseRoles()
 {
-	RoleFactory roleFactory;
+	RoleFactory roleFactory[this];
 	rolePool = roleFactory.getRoles();
 	roles = roleFactory.getRoles();
 	std::random_shuffle( rolePool.begin(), rolePool.end() );
@@ -201,8 +201,8 @@ void Game::nextSegment() {
 
 void Game::startPlayRound()
 {
-	for (int i = 0; i < roles.size(); i++)
-	{
+	turn = roles.at(0)->getPlayer();
+	currentRole = roles.at(0);
 
-	}
+
 }

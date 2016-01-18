@@ -4,7 +4,7 @@
 class King : public Role
 {
 public:
-	King();
+	King(shared_ptr<Game> game);
 	~King();
 };
 

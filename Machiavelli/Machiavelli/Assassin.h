@@ -4,7 +4,7 @@
 class Assassin : public Role
 {
 public:
-	Assassin();
+	Assassin(shared_ptr<Game> game);
 	~Assassin();
 	void Action();
 };

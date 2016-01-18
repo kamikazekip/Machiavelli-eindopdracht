@@ -4,7 +4,7 @@
 class Condottiere : public Role
 {
 public:
-	Condottiere();
+	Condottiere(shared_ptr<Game> game);
 	~Condottiere();
 };
 

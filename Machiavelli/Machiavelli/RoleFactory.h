@@ -8,6 +8,7 @@
 #include <memory>
 #include "Role.h"
 
+class Game;
 using namespace std;
 
 class RoleFactory
@@ -15,10 +16,10 @@ class RoleFactory
 private: 
 	string rolesFile;
 	vector<shared_ptr<Role>> roles;
-	void fillRoleMap();
+	void fillRoleMap(Game game);
 	map<string, shared_ptr<Role>> roleMap;
 public:
-	RoleFactory();
+	RoleFactory(Game game);
 	vector<shared_ptr<Role>> getRoles();
 	~RoleFactory();
 };

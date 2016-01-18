@@ -2,7 +2,7 @@
 
 
 
-Wizard::Wizard()
+Wizard::Wizard(shared_ptr<Game> game) : Role(game)
 {
 }
 

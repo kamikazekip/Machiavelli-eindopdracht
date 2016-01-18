@@ -2,7 +2,7 @@
 
 
 
-Condottiere::Condottiere()
+Condottiere::Condottiere(shared_ptr<Game> game) : Role(game)
 {
 }
 

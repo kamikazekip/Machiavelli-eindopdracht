@@ -4,7 +4,7 @@
 class Wizard : public Role
 {
 public:
-	Wizard();
+	Wizard(shared_ptr<Game> game);
 	~Wizard();
 };
 

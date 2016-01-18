@@ -4,7 +4,7 @@
 class Thief : public Role
 {
 public:
-	Thief();
+	Thief(shared_ptr<Game> game);
 	~Thief();
 };
 

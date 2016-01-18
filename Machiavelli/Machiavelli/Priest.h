@@ -4,7 +4,7 @@
 class Priest : public Role
 {
 public:
-	Priest();
+	Priest(shared_ptr<Game> game);
 	~Priest();
 };
 

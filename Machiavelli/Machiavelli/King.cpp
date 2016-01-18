@@ -2,7 +2,7 @@
 
 
 
-King::King()
+King::King(shared_ptr<Game> game) : Role(game)
 {
 }
 

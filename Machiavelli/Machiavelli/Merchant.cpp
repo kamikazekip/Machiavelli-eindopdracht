@@ -2,7 +2,7 @@
 
 
 
-Merchant::Merchant()
+Merchant::Merchant(shared_ptr<Game> game) : Role(game)
 {
 }
 

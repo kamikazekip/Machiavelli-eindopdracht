@@ -2,7 +2,7 @@
 
 
 
-Assassin::Assassin()
+Assassin::Assassin(shared_ptr<Game> game) : Role(game)
 {
 }
 

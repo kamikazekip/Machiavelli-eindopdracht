@@ -2,7 +2,7 @@
 
 
 
-Priest::Priest()
+Priest::Priest(shared_ptr<Game> game) : Role(game)
 {
 }
 
