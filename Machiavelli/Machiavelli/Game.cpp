@@ -11,6 +11,7 @@ Game::Game()
 	//Shuffle the card deck
 	std::random_shuffle(buildingStack.begin(), buildingStack.end());
 	commands.insert( pair<string, game_function>( "inventory", &Game::look ) );
+	commands.insert( pair<string, game_function>( "cheat", &Game::cheat ) );
 }
 
 
@@ -21,10 +22,8 @@ Game::~Game()
 
 void Game::handleCommand( ClientCommand command, shared_ptr<Player> player )
 {
-	/*
 	if( players.size() == 2 )
 	{
-	*/
 		if( turn == player )
 		{
 			map<string, game_function>::iterator result = commands.find( command.get_cmd() );
@@ -42,13 +41,11 @@ void Game::handleCommand( ClientCommand command, shared_ptr<Player> player )
 		{
 			*player << "Sorry, " << player->get_name() << ", maar je bent niet aan de beurt!" << machiavelli::endl;
 		}
-	/*
 	}
 	else
 	{
 		*player << "Sorry, " << player->get_name() << ", we must wait until there are exactly 2 players in the game!" << machiavelli::endl;
 	} 
-	*/
 }
 
 void Game::chooseOption( ClientCommand command )
@@ -100,7 +97,7 @@ void Game::broadcast( string message )
 {
 	for( size_t c = 0; c < players.size(); c++ )
 	{
-		*players.at( c ) << machiavelli::rn << message << machiavelli::rn;
+		*players.at( c ) << machiavelli::rn << message;
 	}
 }
 
@@ -111,10 +108,10 @@ void Game::look( shared_ptr<Player> player  )
 
 void Game::gameStart()
 {
-	broadcast( "Het spel heeft nu 2 spelers, het spel begint! \r" );
+	broadcast( machiavelli::rn + "Het spel heeft nu 2 spelers, het spel begint! \r" );
 	king = players[0];
 	otherPlayer = players[1];
-	broadcast(king->get_name() + " heeft de koningskaart." + machiavelli::rn + king->get_name() + " zal starten door een rol te kiezen." + machiavelli::rn);
+	broadcast(king->get_name() + " heeft de koningskaart." + machiavelli::rn + king->get_name() + " zal starten door een rol te kiezen." + machiavelli::rn + machiavelli::endl);
 	chooseRoles();
 }
 
@@ -205,4 +202,17 @@ void Game::startPlayRound()
 	{
 
 	}
+}
+
+void Game::cheat( shared_ptr<Player> player )
+{
+	rolePool[0]->setPlayer( king );
+	rolePool[1]->setPlayer( king );
+	rolePool[2]->setPlayer( otherPlayer );
+	rolePool[3]->setPlayer( otherPlayer );
+	string message = "Cheat geactiveerd! " + king->get_name() + " is de " + rolePool[0]->getName() + " en de " + rolePool[1]->getName() + "!" + machiavelli::rn
+		+ otherPlayer->get_name() + " is de " + rolePool[2]->getName() + " en de " + rolePool[3]->getName() + "!";
+	broadcast(message);
+	broadcast( "Het spel begint nu!" + machiavelli::rn + machiavelli::endl  );
+	startPlayRound();
 }

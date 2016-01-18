@@ -54,6 +54,7 @@ private:
 	void pickRole( shared_ptr<Player> player );
 	void nextSegment();
 	void startPlayRound();
+	void cheat( shared_ptr<Player> player );
 public:
 	Game();
 	~Game();
@@ -62,6 +63,5 @@ public:
 	void removePlayer( shared_ptr<Player> player );
 	void broadcast( string message );
 	void look( shared_ptr<Player> player );
-
 };
 
