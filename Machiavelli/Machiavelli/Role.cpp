@@ -25,3 +25,8 @@ string Role::getName()
 {
 	return name;
 }
+
+void Role::setPlayer(shared_ptr<Player> player)
+{
+	this->player = player;
+}

@@ -33,7 +33,7 @@ void Game::handleCommand( ClientCommand command, shared_ptr<Player> player )
 			{
 				( this->*( result->second ) )( player );
 			}
-			else if ( gameState == GameState_Choosing_Role )
+			else if ( gameState == GameState_Choosing_Role || gameState == GameState_Removing_Role )
 			{
 				chooseOption( command );
 			}
@@ -113,6 +113,7 @@ void Game::gameStart()
 {
 	broadcast( "Het spel heeft nu 2 spelers, het spel begint! \r" );
 	king = players[0];
+	otherPlayer = players[1];
 	broadcast(king->get_name() + " heeft de koningskaart." + machiavelli::rn + king->get_name() + " zal starten door een rol te kiezen." + machiavelli::rn);
 	chooseRoles();
 }
@@ -120,27 +121,80 @@ void Game::gameStart()
 void Game::chooseRoles()
 {
 	RoleFactory roleFactory;
-	vector<shared_ptr<Role>> rolePool = roleFactory.getRoles();
+	rolePool = roleFactory.getRoles();
 	roles = roleFactory.getRoles();
 	std::random_shuffle( rolePool.begin(), rolePool.end() );
 
-	*king << "De " << rolePool[rolePool.size() - 1]->getName() << " is weg gelegd. " << machiavelli::rn << "Kies een van de volgende rollen:" + machiavelli::rn;
+	*king << "De " << rolePool[rolePool.size() - 1]->getName() << " is weg gelegd. " << machiavelli::rn;
 	rolePool.erase( rolePool.end()-1, rolePool.end() );
-	
-	gameState = GameState_Choosing_Role;
 
-	for( size_t c = 0; c < rolePool.size(); c++ )
+	sequence.push_back( make_pair( &Game::pickRole,		king ) );
+	sequence.push_back( make_pair( &Game::removeRole,	otherPlayer ) );
+	sequence.push_back( make_pair( &Game::pickRole,		otherPlayer ) );
+	sequence.push_back( make_pair( &Game::removeRole,	king ) );
+	sequence.push_back( make_pair( &Game::pickRole,		king ) );
+	sequence.push_back( make_pair( &Game::removeRole,	otherPlayer ) );
+	sequence.push_back( make_pair( &Game::pickRole,		otherPlayer ) );
+
+	nextSegment();
+}
+
+void Game::pickedRole(shared_ptr<Role> choice )
+{
+	choice->setPlayer(turn);
+	*turn << "Je bent nu de: " << choice->getName() << ", je beurt is nu voorbij!" << machiavelli::endl;
+	rolePool.erase(std::remove(rolePool.begin(), rolePool.end(), choice), rolePool.end());
+	nextSegment();
+}
+
+void Game::removedRole(shared_ptr<Role> choice)
+{
+	*turn << "Je hebt nu de: " << choice->getName() << "weg gelegd!" << machiavelli::endl;
+	rolePool.erase(std::remove(rolePool.begin(), rolePool.end(), choice), rolePool.end());
+	nextSegment();
+}
+
+void Game::pickRole( shared_ptr<Player> player)
+{
+	roleOptions.clear();
+	turn = player;
+	*turn << "Kies een van de volgende rollen om zelf te zijn:" + machiavelli::rn;
+	gameState = GameState_Choosing_Role;
+	for (size_t c = 0; c < rolePool.size(); c++)
 	{
 		ostringstream oss;
 		oss << c;
-		*king << "  [" + oss.str() +"] " << rolePool.at( c )->getName() << machiavelli::rn;
-		roleOptions.insert( std::make_pair( oss.str(), std::make_pair( &Game::pickRole, rolePool.at(c) ) ) );
+		*turn << "  [" + oss.str() + "] " << rolePool.at(c)->getName() << machiavelli::rn;
+		roleOptions.insert(std::make_pair(oss.str(), std::make_pair(&Game::pickedRole, rolePool.at(c))));
 	}
-	*king << machiavelli::endl;
-	turn = king;
+	*turn << machiavelli::endl;
 }
 
-void Game::pickRole( shared_ptr<Role> role )
+void Game::removeRole( shared_ptr<Player> player )
 {
-	*turn << "Je bent nu de: " << role->getName() << ", je beurt is nu voorbij!" << machiavelli::endl;
+	roleOptions.clear();
+	turn = player;
+	*turn << "Kies een van de volgende rollen om weg te leggen:" + machiavelli::rn;
+	gameState = GameState_Removing_Role;
+	for (size_t c = 0; c < rolePool.size(); c++)
+	{
+		ostringstream oss;
+		oss << c;
+		*turn << "  [" + oss.str() + "] " << rolePool.at(c)->getName() << machiavelli::rn;
+		roleOptions.insert(std::make_pair(oss.str(), std::make_pair(&Game::removedRole, rolePool.at(c))));
+	}
+	*turn << machiavelli::endl;
+}
+
+void Game::nextSegment() {
+	if (sequence.size() < 1)
+	{
+		//die ene functie aan;
+		return;
+	}
+	pair<sequence_function, shared_ptr<Player>> segment = sequence[0];
+	sequence.erase(std::remove(sequence.begin(), sequence.end(), segment), sequence.end());
+	sequence_function function = segment.first;
+	shared_ptr<Player> player = segment.second;
+	(this->*(function))(player);
 }

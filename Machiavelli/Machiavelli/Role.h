@@ -17,5 +17,6 @@ public:
 	void virtual Action();
 	void setNameTurn(string name, int turn);
 	string getName();
+	void setPlayer(shared_ptr<Player> player);
 };
 
