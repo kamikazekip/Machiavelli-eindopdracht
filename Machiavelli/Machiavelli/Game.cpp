@@ -117,7 +117,7 @@ void Game::gameStart()
 
 void Game::chooseRoles()
 {
-	RoleFactory roleFactory[this];
+	RoleFactory roleFactory;
 	rolePool = roleFactory.getRoles();
 	roles = roleFactory.getRoles();
 	std::random_shuffle( rolePool.begin(), rolePool.end() );

@@ -1,9 +1,8 @@
 #include "Role.h"
-#include "Game.h"
 
-Role::Role(shared_ptr<Game> game)
+Role::Role()
 {
-	this->game = game;
+	
 }
 
 
@@ -30,9 +29,4 @@ string Role::getName()
 void Role::setPlayer(shared_ptr<Player> player)
 {
 	this->player = player;
-}
-
-shared_ptr<Player> Role::getPlayer()
-{
-	return player;
 }

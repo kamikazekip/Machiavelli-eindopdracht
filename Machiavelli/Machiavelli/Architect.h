@@ -4,7 +4,7 @@
 class Architect : public Role
 {
 public:
-	Architect(shared_ptr<Game> game);
+	Architect();
 	~Architect();
 };
 
