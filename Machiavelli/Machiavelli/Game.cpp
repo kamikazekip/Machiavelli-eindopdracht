@@ -198,3 +198,11 @@ void Game::nextSegment() {
 	shared_ptr<Player> player = segment.second;
 	(this->*(function))(player);
 }
+
+void Game::startPlayRound()
+{
+	for (int i = 0; i < roles.size(); i++)
+	{
+
+	}
+}
