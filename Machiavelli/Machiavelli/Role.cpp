@@ -6,6 +6,10 @@ Role::Role( shared_ptr<Game> game )
 	this->game = game;
 	usedAction = false;
 	usedStandardAction = false;
+	usedPassive = false;
+	usedBuildAction = false;
+	murdered = false;
+	stolen = false;
 }
 
 
@@ -29,11 +33,14 @@ void Role::ChooseGold()
 {
 	usedStandardAction = true;
 	player->addGold(2);
+	game->broadcast( player->get_name() + " heeft 2 goudstukken gepakt!" + machiavelli::endl );
+	game->handleCurrentRole();
 }
 
 void Role::ChooseBuildingCards()
 {
 	usedStandardAction = true;
+	game->handleCurrentRole();
 }
 
 void Role::PassiveAction()
