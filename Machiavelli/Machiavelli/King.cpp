@@ -13,5 +13,5 @@ King::~King()
 
 void King::PassiveAction()
 {
-	for (int = 0; )
+	//for (int = 0; )
 }
