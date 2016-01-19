@@ -49,6 +49,7 @@ void Role::PassiveAction()
 
 void Role::ChooseBuilding()
 {
+	buildingOptions.clear();
 	game->setGameState( GameState_In_Role_Building );
 	vector<shared_ptr<Building>> options = player->getBuildings();
 
@@ -79,8 +80,7 @@ void Role::Build( string chosenOption )
 				player->buildBuilding( buildingToBuild );
 				game->broadcast( player->get_name() + " heeft een " + buildingToBuild->getTextRepresentation() + " gebouwd en heeft nog " 
 							   + game->itos(player->getGold()) + " goud over!" + machiavelli::rn );
-				usedBuildAction = true;
-				game->handleCurrentRole();
+				DoneBuilding();
 			}
 			else
 			{
@@ -152,4 +152,10 @@ bool Role::UsedBuildAction()
 void Role::PlayerChoseOption( string chosenOption )
 {
 
+}
+
+void Role::DoneBuilding()
+{
+	usedBuildAction = true;
+	game->handleCurrentRole();
 }

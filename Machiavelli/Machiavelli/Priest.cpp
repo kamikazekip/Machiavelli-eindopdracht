@@ -4,6 +4,7 @@
 
 Priest::Priest( shared_ptr<Game> game ) :Role( game )
 {
+	usedAction = true;
 }
 
 

@@ -37,6 +37,8 @@ public:
 	bool UsedBuildAction();
 	virtual void PlayerChoseOption( string chosenOption );
 
+	virtual void DoneBuilding();
+
 	bool murdered, stolen;
 };
 

@@ -87,7 +87,7 @@ void Game::addPlayer( shared_ptr<Player> player )
 	/* Initialise the player */
 	vector<shared_ptr<Building>> hand = getBuildingsFromStack( 4 );
 	player->addBuildings( hand );
-	int newGold = 2;
+	int newGold = 2000;
 	player->addGold( newGold );
 
 	ostringstream oss;
@@ -133,6 +133,12 @@ void Game::look( shared_ptr<Player> player  )
 		}
 	}
 	*player << machiavelli::rn;
+
+	*player << "Je hebt de volgende hand:" << machiavelli::rn;
+	for( int c = 0; c < player->getBuildings().size(); c++ )
+	{
+		*player << machiavelli::indent << player->getBuildings().at( c )->getTextRepresentation() << machiavelli::rn;
+	}
 	handleCurrentRole();
 }
 
@@ -247,7 +253,7 @@ void Game::startPlayRound()
 void Game::handleCurrentRole( )
 {
 	gameState = GameState_In_Game;
-	if( currentRole->UsedPassive() )
+	if( !currentRole->UsedPassive() )
 		currentRole->PassiveAction();
 	if( currentRole->UsedAction() && currentRole->UsedStandardAction() && currentRole->UsedBuildAction() )
 	{
@@ -324,6 +330,7 @@ void Game::nextRole()
 			int gold = currentRole->getPlayer()->getGold();
 			roles[1]->getPlayer()->addGold(gold);
 			currentRole->getPlayer()->addGold(gold*-1);
+			handleCurrentRole();
 		}
 		else
 			handleCurrentRole();
@@ -334,12 +341,12 @@ void Game::nextRole()
 
 void Game::cheat( shared_ptr<Player> player )
 {
-	roles[0]->setPlayer( king );
-	roles[1]->setPlayer( king );
-	roles[2]->setPlayer( otherPlayer );
+	roles[5]->setPlayer( king );
+	roles[7]->setPlayer( king );
 	roles[3]->setPlayer( otherPlayer );
-	string message = "Cheat geactiveerd! " + king->get_name() + " is de " + roles[0]->getName() + " en de " + roles[1]->getName() + "!" + machiavelli::rn
-		+ otherPlayer->get_name() + " is de " + roles[2]->getName() + " en de " + roles[3]->getName() + "!";
+	roles[4]->setPlayer( otherPlayer );
+	string message = "Cheat geactiveerd! " + king->get_name() + " is de " + roles[5]->getName() + " en de " + roles[7]->getName() + "!" + machiavelli::rn
+		+ otherPlayer->get_name() + " is de " + roles[3]->getName() + " en de " + roles[4]->getName() + "!";
 	broadcast(message);
 	broadcast( "Het spel begint nu!" + machiavelli::rn + machiavelli::endl  );
 	startPlayRound();
