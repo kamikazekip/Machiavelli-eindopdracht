@@ -35,7 +35,7 @@ void Condottiere::SpecialAction()
 		{
 			for (int o = 0; o < otherPlayer->getTableBuildings().size(); o++)
 			{
-				if (otherPlayer->getTableBuildings().at(o)->getPrice() - 1 <= player->getGold())
+				if (otherPlayer->getTableBuildings().at(o)->getPrice() - 1 <= player->getGold() && otherPlayer->getTableBuildings().at(o)->canBeDestroyed)
 				{
 					ostringstream oss;
 					oss << o;

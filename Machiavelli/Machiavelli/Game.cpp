@@ -123,7 +123,15 @@ void Game::broadcast( string message )
 
 void Game::look( shared_ptr<Player> player  )
 {
-	cout << player->get_name() << endl;
+	for (int i = 0; i < players.size(); i++)
+	{
+		shared_ptr<Player> tempPlayer = players.at(i);
+		*player << tempPlayer->get_name() << " heeft " << itos(tempPlayer->getGold()) << " en de volgende gebouwen:" << machiavelli::rn;
+		for (int o = 0; o < tempPlayer->getTableBuildings().size(); o++)
+		{
+			*player << tempPlayer->getTableBuildings().at(o)->getTextRepresentation() << machiavelli::rn;
+		}
+	}
 }
 
 void Game::gameStart()
@@ -303,7 +311,10 @@ void Game::nextRole()
 		}
 		else if( currentRole->stolen )
 		{
-			/* TODO IMPLEMENTEER DIEF */
+			broadcast("De " + currentRole->getName() + " is bestolen verliest nu zijn goud!" + machiavelli::rn);
+			int gold = currentRole->getPlayer()->getGold();
+			roles[1]->getPlayer()->addGold(gold);
+			currentRole->getPlayer()->addGold(gold*-1);
 		}
 		else
 			handleCurrentRole();

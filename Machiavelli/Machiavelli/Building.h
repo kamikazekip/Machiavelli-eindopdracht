@@ -20,5 +20,6 @@ public:
 	std::string getTextRepresentation();
 	std::string getName();
 	int getPrice();
+	bool canBeDestroyed;
 };
 

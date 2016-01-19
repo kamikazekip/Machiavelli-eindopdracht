@@ -9,6 +9,10 @@ Priest::Priest( shared_ptr<Game> game ) :Role( game )
 
 Priest::~Priest()
 {
+	for (int i = 0; i < player->getTableBuildings().size(); i++)
+	{
+		player->getTableBuildings().at(i)->canBeDestroyed = true;
+	}
 }
 
 void Priest::PassiveAction()
@@ -20,5 +24,9 @@ void Priest::PassiveAction()
 		{
 			player->addGold(1);
 		}
+	}
+	for (int i = 0; i < player->getTableBuildings().size(); i++)
+	{
+		player->getTableBuildings().at(i)->canBeDestroyed = false;
 	}
 }
