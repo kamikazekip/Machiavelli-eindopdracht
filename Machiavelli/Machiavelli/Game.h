@@ -76,4 +76,5 @@ public:
 	vector<shared_ptr<Role>> getRoles();
 	void handleCurrentRole();
 	string itos( int i );
+	vector<shared_ptr<Player>> getPlayers();
 };

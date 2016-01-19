@@ -7,5 +7,9 @@ public:
 	Condottiere(shared_ptr<Game> game);
 	~Condottiere();
 	void PassiveAction();
+	void SpecialAction();
+	void PlayerChoseOption(string chosenOption);
+private:
+	map<string, shared_ptr<Role>> condottiereConnections;
 };
 

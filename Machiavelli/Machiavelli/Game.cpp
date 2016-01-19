@@ -331,10 +331,14 @@ vector<shared_ptr<Role>> Game::getRoles()
 	return roles;
 }
 
-
-string Game::itos(int i)
+string Game::itos( int i )
 {
 	ostringstream oss;
 	oss << i;
 	return oss.str();
+}
+
+vector<shared_ptr<Player>> Game::getPlayers()
+{
+	return players;
 }

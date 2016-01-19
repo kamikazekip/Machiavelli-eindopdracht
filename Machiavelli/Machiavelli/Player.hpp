@@ -28,12 +28,14 @@ public:
 	
 	std::string get_name() const { return name; }
 	void set_name(const string& new_name) { name = new_name; }
-	vector<shared_ptr<Building>> table;
+	
 	void addBuildings(vector<shared_ptr<Building>> buildings);
 	void removeBuilding(shared_ptr < Building> buildings);
 	void clearHand();
 	void addGold( int newGold );
 	vector<shared_ptr<Building>> getBuildings();
+	vector<shared_ptr<Building>> getTableBuildings();
+	void removeTableBuilding(shared_ptr < Building> buildings);
 
 	const Player& operator<<( const char c ) const;
 	const Player& operator<<( const char* message ) const;
@@ -42,7 +44,7 @@ private:
 	string name;
 	int gold;
 	vector<shared_ptr<Building>> hand;
-	vector<shared_ptr<Building>> buildings;
+	vector<shared_ptr<Building>> table;
 };
 
 #endif /* Player_hpp */
