@@ -60,6 +60,8 @@ private:
 	void pickRole( shared_ptr<Player> player );
 	void nextSegment();
 	void nextRole();
+	bool checkFinished();
+	void checkWin();
 	void startPlayRound();
 	void cheat( shared_ptr<Player> player );
 public:

@@ -27,9 +27,6 @@ void Priest::PassiveAction()
 			counter++;
 			player->addGold(1);
 		}
-	}
-	for (int i = 0; i < player->getTableBuildings().size(); i++)
-	{
 		player->getTableBuildings().at(i)->canBeDestroyed = false;
 	}
 

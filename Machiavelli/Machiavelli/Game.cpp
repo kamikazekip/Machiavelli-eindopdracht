@@ -344,6 +344,30 @@ void Game::nextRole()
 	}
 }
 
+bool Game::checkFinished()
+{
+	for (int i = 0; i < players.size(); i++)
+	{
+		if (players.at(i)->getTableBuildings().size() > 8)
+		{
+			broadcast(players.at(i)->get_name() + " heeft 8 of meer gebouwen!");
+			checkWin();
+		}
+	}
+}
+
+void Game::checkWin()
+{
+	if (players[0]->countScore() < players[1]->countScore())
+	{
+		broadcast(players[1]->get_name() + " heeft gewonnen!");
+	}
+	else
+	{
+		broadcast(players[0]->get_name() + " heeft gewonnen!");
+	}
+}
+
 void Game::cheat( shared_ptr<Player> player )
 {
 	roles[5]->setPlayer( king );
