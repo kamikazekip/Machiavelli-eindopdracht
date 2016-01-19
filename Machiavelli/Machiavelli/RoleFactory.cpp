@@ -9,9 +9,10 @@
 #include "Merchant.h"
 #include "Game.h"
 
-RoleFactory::RoleFactory(Game game)
+RoleFactory::RoleFactory( shared_ptr<Game> game )
 {
-	fillRoleMap(game);
+	this->game = game;
+	fillRoleMap();
 	rolesFile = "../Machiavelli/Karakterkaarten.csv";
 	ifstream myfile(rolesFile);
 	string line;
@@ -47,17 +48,16 @@ RoleFactory::~RoleFactory()
 {
 }
 
-void RoleFactory::fillRoleMap(Game game)
+void RoleFactory::fillRoleMap()
 {
-	shared_ptr<Game> gamePointer = shared_ptr<Game>{ game };
-	roleMap.insert(pair<string, shared_ptr<Role>>("Moordenaar", shared_ptr<Role> { new Assassin(gamePointer) }));
-	roleMap.insert(pair<string, shared_ptr<Role>>("Dief", shared_ptr<Role> { new Thief(gamePointer) }));
-	roleMap.insert(pair<string, shared_ptr<Role>>("Magier", shared_ptr<Role> { new Wizard(gamePointer) }));
-	roleMap.insert(pair<string, shared_ptr<Role>>("Koning", shared_ptr<Role> { new King(gamePointer) }));
-	roleMap.insert(pair<string, shared_ptr<Role>>("Prediker", shared_ptr<Role> { new Priest(gamePointer) }));
-	roleMap.insert(pair<string, shared_ptr<Role>>("Koopman", shared_ptr<Role> { new Merchant(gamePointer) }));
-	roleMap.insert(pair<string, shared_ptr<Role>>("Bouwmeester", shared_ptr<Role> { new Architect(gamePointer) }));
-	roleMap.insert(pair<string, shared_ptr<Role>>("Condottiere", shared_ptr<Role> { new Assassin(gamePointer) }));
+	roleMap.insert(pair<string, shared_ptr<Role>>("Moordenaar", shared_ptr<Role> { new Assassin(game) }));
+	roleMap.insert(pair<string, shared_ptr<Role>>("Dief", shared_ptr<Role> { new Thief( game ) }));
+	roleMap.insert(pair<string, shared_ptr<Role>>("Magier", shared_ptr<Role> { new Wizard( game ) }));
+	roleMap.insert(pair<string, shared_ptr<Role>>("Koning", shared_ptr<Role> { new King( game ) }));
+	roleMap.insert(pair<string, shared_ptr<Role>>("Prediker", shared_ptr<Role> { new Priest( game ) }));
+	roleMap.insert(pair<string, shared_ptr<Role>>("Koopman", shared_ptr<Role> { new Merchant( game ) }));
+	roleMap.insert(pair<string, shared_ptr<Role>>("Bouwmeester", shared_ptr<Role> { new Architect( game ) }));
+	roleMap.insert(pair<string, shared_ptr<Role>>("Condottiere", shared_ptr<Role> { new Assassin( game ) }));
 }
 
 vector<shared_ptr<Role>> RoleFactory::getRoles()

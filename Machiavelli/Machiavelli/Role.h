@@ -14,7 +14,7 @@ private:
 	int turn;
 	shared_ptr<Game> game;
 public:
-	Role(shared_ptr<Game> game);
+	Role( shared_ptr<Game> game );
 	~Role();
 	void virtual Action();
 	void setNameTurn(string name, int turn);

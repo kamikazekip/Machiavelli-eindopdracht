@@ -1,7 +1,7 @@
 #include "Role.h"
 #include "Game.h"
 
-Role::Role(shared_ptr<Game> game)
+Role::Role( shared_ptr<Game> game )
 {
 	this->game = game;
 }

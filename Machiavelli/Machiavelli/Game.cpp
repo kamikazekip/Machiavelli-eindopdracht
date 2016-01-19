@@ -117,9 +117,11 @@ void Game::gameStart()
 
 void Game::chooseRoles()
 {
-	RoleFactory roleFactory[this];
-	rolePool = roleFactory.getRoles();
-	roles = roleFactory.getRoles();
+	shared_ptr<Game> gamePointer { this };
+	std::shared_ptr<RoleFactory> roleFactory = std::make_shared<RoleFactory>( gamePointer );
+
+	rolePool = roleFactory->getRoles();
+	roles = roleFactory->getRoles();
 	std::random_shuffle( rolePool.begin(), rolePool.end() );
 
 	*king << "De " << rolePool[rolePool.size() - 1]->getName() << " is weg gelegd. " << machiavelli::rn;
