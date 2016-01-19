@@ -56,7 +56,7 @@ void RoleFactory::fillRoleMap()
 	roleMap.insert(pair<string, shared_ptr<Role>>("Prediker", shared_ptr<Role> { new Priest( game ) }));
 	roleMap.insert(pair<string, shared_ptr<Role>>("Koopman", shared_ptr<Role> { new Merchant( game ) }));
 	roleMap.insert(pair<string, shared_ptr<Role>>("Bouwmeester", shared_ptr<Role> { new Architect( game ) }));
-	roleMap.insert(pair<string, shared_ptr<Role>>("Condottiere", shared_ptr<Role> { new Assassin( game ) }));
+	roleMap.insert(pair<string, shared_ptr<Role>>("Condottiere", shared_ptr<Role> { new Condottiere( game ) }));
 }
 
 vector<shared_ptr<Role>> RoleFactory::getRoles()
