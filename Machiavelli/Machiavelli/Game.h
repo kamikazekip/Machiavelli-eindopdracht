@@ -75,4 +75,5 @@ public:
 	vector<shared_ptr<Building>> getBuildingsFromStack( int amount );
 	vector<shared_ptr<Role>> getRoles();
 	void handleCurrentRole();
+	string itos( int i );
 };

@@ -6,10 +6,10 @@ Game::Game()
 {
 	gameState = GameState_PreGame;
 	srand(time(NULL));
-	buildingFactory = std::move(unique_ptr<BuildingFactory> { new BuildingFactory() });
+	buildingFactory = move(unique_ptr<BuildingFactory> { new BuildingFactory() });
 	buildingStack = buildingFactory->getStartBuildings();
 	//Shuffle the card deck
-	std::random_shuffle(buildingStack.begin(), buildingStack.end());
+	random_shuffle(buildingStack.begin(), buildingStack.end());
 	commands.insert( pair<string, game_function>( "look", &Game::look ) );
 	commands.insert( pair<string, game_function>( "cheat", &Game::cheat ) );
 }
@@ -63,6 +63,11 @@ void Game::chooseOption( ClientCommand command )
 			role_function func = result->second;
 			( (*currentRole).*( func ) )( );
 		}
+		else
+		{
+			*turn << command.get_cmd() << " is niet een van de opties!" << machiavelli::rn << machiavelli::rn;
+			handleCurrentRole();
+		}
 	}
 	else if( gameState == GameState_In_Role )
 	{
@@ -114,7 +119,7 @@ void Game::broadcast( string message )
 
 void Game::look( shared_ptr<Player> player  )
 {
-	std::cout << player->get_name() << std::endl;
+	cout << player->get_name() << endl;
 }
 
 void Game::gameStart()
@@ -129,10 +134,10 @@ void Game::gameStart()
 void Game::chooseRoles()
 {
 	shared_ptr<Game> gamePointer { this };
-	std::shared_ptr<RoleFactory> roleFactory = std::make_shared<RoleFactory>( gamePointer );
+	shared_ptr<RoleFactory> roleFactory = make_shared<RoleFactory>( gamePointer );
 	rolePool = roleFactory->getRoles();
 	roles = roleFactory->getRoles();
-	std::random_shuffle( rolePool.begin(), rolePool.end() );
+	random_shuffle( rolePool.begin(), rolePool.end() );
 
 	*king << "De " << rolePool[rolePool.size() - 1]->getName() << " is weg gelegd. " << machiavelli::rn;
 	rolePool.erase( rolePool.end()-1, rolePool.end() );
@@ -154,14 +159,14 @@ void Game::pickedRole(shared_ptr<Role> choice )
 {
 	choice->setPlayer(turn);
 	*turn << "Je bent nu de: " << choice->getName() << ", je beurt is nu voorbij!" << machiavelli::endl;
-	rolePool.erase(std::remove(rolePool.begin(), rolePool.end(), choice), rolePool.end());
+	rolePool.erase(remove(rolePool.begin(), rolePool.end(), choice), rolePool.end());
 	nextSegment();
 }
 
 void Game::removedRole(shared_ptr<Role> choice)
 {
 	*turn << "Je hebt nu de: " << choice->getName() << " weg gelegd!" << machiavelli::endl;
-	rolePool.erase(std::remove(rolePool.begin(), rolePool.end(), choice), rolePool.end());
+	rolePool.erase(remove(rolePool.begin(), rolePool.end(), choice), rolePool.end());
 	nextSegment();
 }
 
@@ -176,7 +181,7 @@ void Game::pickRole( shared_ptr<Player> player)
 		ostringstream oss;
 		oss << c;
 		*turn << machiavelli::indent << "[" + oss.str() + "] " << rolePool.at(c)->getName() << machiavelli::rn;
-		roleOptions.insert(std::make_pair(oss.str(), std::make_pair(&Game::pickedRole, rolePool.at(c))));
+		roleOptions.insert(make_pair(oss.str(), make_pair(&Game::pickedRole, rolePool.at(c))));
 	}
 	*turn << machiavelli::endl;
 }
@@ -230,29 +235,29 @@ void Game::handleCurrentRole( )
 	}
 	else
 	{
+		roleFunctions.clear();
 		*currentRole->getPlayer() << "Kies een van de volgende acties!" << machiavelli::rn;
 		*currentRole->getPlayer() << machiavelli::indent << "[bekijken] Bekijk het goud en gebouwen van de tegenstander" << machiavelli::rn;
-		string counter = "0";
+		string counter = "-1";
 		if( !currentRole->UsedStandardAction() )
 		{
-			roleFunctions.insert( std::make_pair( counter, &Role::ChooseGold ) );
+			counter = itos( stoi( counter ) + 1 );
+			roleFunctions.insert( make_pair( counter, &Role::ChooseGold ) );
 			*currentRole->getPlayer() << machiavelli::indent << "[" + counter + "] Neem 2 goudstukken" << machiavelli::rn;
-			int counterInt = stoi( counter );
-			counterInt++;
-			ostringstream oss;
-			oss << counterInt;
-			counter = oss.str();
-			roleFunctions.insert( std::make_pair( counter, &Role::ChooseBuildingCards ) );
+			counter = itos( stoi( counter ) + 1 );
+			roleFunctions.insert( make_pair( counter, &Role::ChooseBuildingCards ) );
 			*currentRole->getPlayer() << machiavelli::indent << "[" + counter + "] Neem 2 bouwkaarten en leg er 1 af" << machiavelli::rn;
+		}
+		else
+		{
+			counter = itos( stoi( counter ) + 1 );
+			roleFunctions.insert( make_pair( counter, &Role::Build ) );
+			*currentRole->getPlayer() << machiavelli::indent << "[" + counter + "] Bouw een gebouw" << machiavelli::rn;
 		}
 		if( !currentRole->UsedAction() )
 		{
-			int counterInt = stoi( counter );
-			counterInt++;
-			ostringstream oss;
-			oss << counterInt;
-			counter = oss.str();;
-			roleFunctions.insert( std::make_pair( counter, &Role::SpecialAction ) );
+			counter = itos( stoi( counter ) + 1 );
+			roleFunctions.insert( make_pair( counter, &Role::SpecialAction ) );
 			*currentRole->getPlayer() << machiavelli::indent << "[" + counter + "] Maak gebruik van de karaktereigenschap van de " << currentRole->getName() << machiavelli::rn;
 		}
 		*currentRole->getPlayer() << machiavelli::endl;
@@ -269,6 +274,11 @@ void Game::nextRole()
 	{
 		currentRole = *roleIt;
 		broadcast( "De " + currentRole->getName() + " is nu aan de beurt!" + machiavelli::rn);
+		if( currentRole->HasPlayer() )
+		{
+			string playerName = currentRole->getPlayer()->get_name();
+			broadcast( playerName + " is de " + currentRole->getName() + "! " + playerName + " is nu dus aan de beurt!" + machiavelli::rn);
+		}
 		if( !currentRole->HasPlayer() )
 		{
 			broadcast( "De " + currentRole->getName() + " is niet gekozen deze ronde!" + machiavelli::rn );
@@ -301,7 +311,7 @@ void Game::cheat( shared_ptr<Player> player )
 
 void Game::setNewKing( shared_ptr<Player> newKing )
 {
-
+	king = newKing; // :'D
 }
 
 vector<shared_ptr<Building>> Game::getBuildingsFromStack( int amount )
@@ -319,4 +329,12 @@ void Game::setGameState( GameState newState )
 vector<shared_ptr<Role>> Game::getRoles()
 {
 	return roles;
+}
+
+
+string Game::itos(int i)
+{
+	ostringstream oss;
+	oss << i;
+	return oss.str();
 }
