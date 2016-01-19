@@ -26,5 +26,6 @@ void Merchant::PassiveAction()
 		}
 	}
 	string counterStr = game->itos( counter );
+	game->broadcast( player->get_name() + " ( de koopman ) heeft 1 extra goudstuk ontvangen omdat hij de koopman is!" );
 	game->broadcast( player->get_name() + " ( de koopman ) heeft " + counterStr + " goud ontvangen omdat hij " + counterStr + " groene gebouwen heeft gebouwd!" );
 }
