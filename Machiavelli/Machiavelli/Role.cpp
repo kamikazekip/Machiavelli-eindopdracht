@@ -53,9 +53,10 @@ void Role::ChooseBuilding()
 	vector<shared_ptr<Building>> options = player->getBuildings();
 
 	*player << "Welk gebouw wil je bouwen?" << machiavelli::rn;
+	*player << machiavelli::indent << "[0] bouwen annuleren" << machiavelli::rn;
 	for( size_t c = 0; c < options.size(); c++ )
 	{
-		string counter = game->itos( c );
+		string counter = game->itos( c + 1 );
 		buildingOptions.insert( make_pair( counter, options.at( c ) ) );
 		*player << machiavelli::indent << "[" + counter + "] " << options.at( c )->getTextRepresentation() << machiavelli::rn;
 	}
@@ -64,7 +65,19 @@ void Role::ChooseBuilding()
 
 void Role::Build( string chosenOption )
 {
-	*player << "you chose " << chosenOption << machiavelli::endl;
+	if( chosenOption == "0" )
+	{
+		game->handleCurrentRole();
+	}
+	else
+	{
+		map<string, shared_ptr<Building>>::iterator result = buildingOptions.find( chosenOption );
+		if( result != buildingOptions.end() )
+		{
+			shared_ptr<Building> buildingToBuild = result->second;
+			if( player->getGold() );
+		}
+	}
 }
 
 bool Role::HasPlayer()

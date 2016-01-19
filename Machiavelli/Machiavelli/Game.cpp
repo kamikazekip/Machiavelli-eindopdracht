@@ -293,6 +293,10 @@ void Game::nextRole()
 			broadcast( "De " + currentRole->getName() + " is vermoord en kan dus niets doen deze ronde!" + machiavelli::rn );
 			nextRole();
 		}
+		else if( currentRole->stolen )
+		{
+			/* TODO IMPLEMENTEER DIEF */
+		}
 		else
 			handleCurrentRole();
 	}
