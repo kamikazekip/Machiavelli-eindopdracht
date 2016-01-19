@@ -15,6 +15,7 @@ Role::~Role()
 
 void Role::SpecialAction()
 {
+	game->setGameState( GameState_In_Role );
 	usedAction = true;
 }
 

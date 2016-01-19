@@ -25,9 +25,11 @@ void Assassin::SpecialAction()
 			*player << machiavelli::indent << "[" + oss.str() + "] " << game->getRoles().at( i )->getName() << machiavelli::rn;
 		}
 	}
+	*player << machiavelli::endl;
 }
 
 void Assassin::PlayerChoseOption( string chosenOption )
 {
-
+	*player << "Je hebt de " << murderConnections.at( chosenOption )->getName() << " gekozen!" << machiavelli::endl;
+	murderConnections.at( chosenOption )->setPlayer( nullptr );
 }

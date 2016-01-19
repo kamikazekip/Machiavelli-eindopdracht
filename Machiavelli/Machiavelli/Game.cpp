@@ -55,7 +55,7 @@ void Game::chooseOption( ClientCommand command )
 			( this->*( result->second.first ) )( result->second.second );
 		}
 	}
-	if( gameState == GameState_In_Game )
+	else if( gameState == GameState_In_Game )
 	{
 		map<string, role_function>::iterator result = roleFunctions.find( command.get_cmd() );
 		if( result != roleFunctions.end() )
@@ -64,7 +64,7 @@ void Game::chooseOption( ClientCommand command )
 			( (*currentRole).*( func ) )( );
 		}
 	}
-	if( gameState == GameState_In_Role )
+	else if( gameState == GameState_In_Role )
 	{
 		currentRole->PlayerChoseOption( command.get_cmd() );
 	}
