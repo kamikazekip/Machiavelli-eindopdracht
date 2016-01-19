@@ -125,7 +125,7 @@ void Game::chooseRoles()
 	*king << "De " << rolePool[rolePool.size() - 1]->getName() << " is weg gelegd. " << machiavelli::rn;
 	rolePool.erase( rolePool.end()-1, rolePool.end() );
 
-	sequence.push_back( make_pair( &Game::pickRole,		king ) );
+	sequoence.push_back( make_pair( &Game::pickRole,		king ) );
 	sequence.push_back( make_pair( &Game::removeRole,	otherPlayer ) );
 	sequence.push_back( make_pair( &Game::pickRole,		otherPlayer ) );
 	sequence.push_back( make_pair( &Game::removeRole,	king ) );
@@ -281,4 +281,9 @@ vector<shared_ptr<Building>> Game::getBuildingsFromStack( int amount )
 	vector<shared_ptr<Building>> buildings ( buildingStack.end() - 2, buildingStack.end() );
 	buildingStack.erase( buildingStack.end() - 4, buildingStack.end() );
 	return buildings;
+}
+
+vector<shared_ptr<Role>> Game::getRoles()
+{
+	return roles;
 }
