@@ -339,6 +339,10 @@ void Game::nextRole()
 	}
 	else
 	{
+		if (checkFinished())
+		{
+			return;
+		}
 		broadcast( "Speelronde voorbij, De nieuwe speelronde begint nu!" + machiavelli::rn );
 		chooseRoles();
 	}
@@ -352,8 +356,10 @@ bool Game::checkFinished()
 		{
 			broadcast(players.at(i)->get_name() + " heeft 8 of meer gebouwen!");
 			checkWin();
+			return true;
 		}
 	}
+	return false;
 }
 
 void Game::checkWin()
