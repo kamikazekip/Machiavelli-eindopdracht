@@ -15,7 +15,7 @@ Role::~Role()
 
 void Role::Action()
 {
-
+	usedAction = true;
 }
 
 void Role::setNameTurn(string name, int turn)
@@ -26,17 +26,18 @@ void Role::setNameTurn(string name, int turn)
 
 void Role::GetGold()
 {
+	usedStandardAction = true;
 	player->addGold(2);
 }
 
 void Role::GetBuildingCards()
 {
-
+	usedStandardAction = true;
 }
 
 void Role::PassiveAction()
 {
-
+	usedPassive = true;
 }
 
 bool Role::HasPlayer()
@@ -76,4 +77,9 @@ bool Role::UsedStandardAction()
 bool Role::UsedPassive()
 {
 	return usedPassive;
+}
+
+bool Role::UsedBuildAction()
+{
+	return usedBuildAction;
 }
