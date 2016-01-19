@@ -10,7 +10,7 @@ Game::Game()
 	buildingStack = buildingFactory->getStartBuildings();
 	//Shuffle the card deck
 	random_shuffle(buildingStack.begin(), buildingStack.end());
-	commands.insert( pair<string, game_function>( "look", &Game::look ) );
+	commands.insert( pair<string, game_function>( "bekijken", &Game::look ) );
 	commands.insert( pair<string, game_function>( "cheat", &Game::cheat ) );
 }
 
@@ -126,7 +126,7 @@ void Game::look( shared_ptr<Player> player  )
 	for (int i = 0; i < players.size(); i++)
 	{
 		shared_ptr<Player> tempPlayer = players.at(i);
-		*player << tempPlayer->get_name() << " heeft " << itos(tempPlayer->getGold()) << " en de volgende gebouwen:" << machiavelli::rn;
+		*player << tempPlayer->get_name() << " heeft " << itos(tempPlayer->getGold()) << " goud, en de volgende gebouwen:" << machiavelli::rn;
 		for (int o = 0; o < tempPlayer->getTableBuildings().size(); o++)
 		{
 			*player << tempPlayer->getTableBuildings().at(o)->getTextRepresentation() << machiavelli::rn;
