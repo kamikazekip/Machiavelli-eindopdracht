@@ -33,6 +33,7 @@ public:
 	void removeBuilding(shared_ptr < Building> buildings);
 	void clearHand();
 	void addGold( int newGold );
+	int getGold();
 	vector<shared_ptr<Building>> getBuildings();
 	vector<shared_ptr<Building>> getTableBuildings();
 	void removeTableBuilding(shared_ptr < Building> buildings);

@@ -49,6 +49,11 @@ void Player::addGold( int newGold )
 	gold += newGold;
 }
 
+int Player::getGold()
+{
+	return gold;
+}
+
 vector<shared_ptr<Building>> Player::getBuildings()
 {
 	return hand;

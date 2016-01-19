@@ -53,3 +53,8 @@ std::string Building::getName()
 {
 	return name;
 }
+
+int Building::getPrice()
+{
+	return price;
+}
