@@ -15,6 +15,11 @@ Building::~Building()
 {
 }
 
+Color Building::getColor()
+{
+	return color;
+}
+
 Color Building::getColor( std::string color )
 {
 	if( color == "geel" )

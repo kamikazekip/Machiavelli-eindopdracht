@@ -72,3 +72,8 @@ bool Role::UsedStandardAction()
 {
 	return usedStandardAction;
 }
+
+bool Role::UsedPassive()
+{
+	return usedPassive;
+}

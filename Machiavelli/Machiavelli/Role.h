@@ -13,7 +13,7 @@ protected:
 	string name;
 	int turn;
 	shared_ptr<Game> game;
-	bool usedAction, usedStandardAction;
+	bool usedAction, usedStandardAction, usedPassive;
 public:
 	Role( shared_ptr<Game> game );
 	~Role();
@@ -28,5 +28,6 @@ public:
 	void setPlayer(shared_ptr<Player> player);
 	bool UsedAction();
 	bool UsedStandardAction();
+	bool UsedPassive();
 };
 
