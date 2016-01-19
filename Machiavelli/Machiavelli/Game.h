@@ -29,7 +29,7 @@ namespace machiavelli
 	const string rn { "\r\n" };
 	const string indent{ "  " };
 }
-enum GameState { GameState_PreGame, GameState_Choosing_Role, GameState_Removing_Role, GameState_In_Game, GameState_In_Role };
+enum GameState { GameState_PreGame, GameState_Choosing_Role, GameState_Removing_Role, GameState_In_Game, GameState_In_Role, GameState_In_Role_Building };
 
 class Game
 {

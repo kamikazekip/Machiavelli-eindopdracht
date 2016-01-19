@@ -2,6 +2,7 @@
 #include "Player.hpp"
 #include <memory>
 #include <string>
+#include <map>
 
 using namespace std;
 class Game;
@@ -14,6 +15,7 @@ protected:
 	int turn;
 	shared_ptr<Game> game;
 	bool usedAction, usedStandardAction, usedPassive, usedBuildAction;
+	map<string, shared_ptr<Building>> buildingOptions;
 public:
 	Role( shared_ptr<Game> game );
 	~Role();
@@ -22,7 +24,8 @@ public:
 	virtual void ChooseGold();
 	virtual void ChooseBuildingCards();
 	virtual void PassiveAction();
-	virtual void Build();
+	virtual void ChooseBuilding();
+	virtual void Build( string );
 	bool HasPlayer();
 	shared_ptr<Player> getPlayer();
 	string getName();

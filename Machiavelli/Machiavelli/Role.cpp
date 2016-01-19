@@ -12,7 +12,6 @@ Role::Role( shared_ptr<Game> game )
 	stolen = false;
 }
 
-
 Role::~Role()
 {
 }
@@ -48,9 +47,24 @@ void Role::PassiveAction()
 	usedPassive = true;
 }
 
-void Role::Build()
+void Role::ChooseBuilding()
 {
+	game->setGameState( GameState_In_Role_Building );
+	vector<shared_ptr<Building>> options = player->getBuildings();
 
+	*player << "Welk gebouw wil je bouwen?" << machiavelli::rn;
+	for( size_t c = 0; c < options.size(); c++ )
+	{
+		string counter = game->itos( c );
+		buildingOptions.insert( make_pair( counter, options.at( c ) ) );
+		*player << machiavelli::indent << "[" + counter + "] " << options.at( c )->getTextRepresentation() << machiavelli::rn;
+	}
+	*player << machiavelli::endl;
+}
+
+void Role::Build( string chosenOption )
+{
+	*player << "you chose " << chosenOption << machiavelli::endl;
 }
 
 bool Role::HasPlayer()

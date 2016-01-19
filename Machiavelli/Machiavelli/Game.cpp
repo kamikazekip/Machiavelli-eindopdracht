@@ -73,6 +73,10 @@ void Game::chooseOption( ClientCommand command )
 	{
 		currentRole->PlayerChoseOption( command.get_cmd() );
 	}
+	else if( gameState == GameState_In_Role_Building )
+	{
+		currentRole->Build( command.get_cmd() );
+	}
 }
 
 void Game::addPlayer( shared_ptr<Player> player )
@@ -251,7 +255,7 @@ void Game::handleCurrentRole( )
 		else
 		{
 			counter = itos( stoi( counter ) + 1 );
-			roleFunctions.insert( make_pair( counter, &Role::Build ) );
+			roleFunctions.insert( make_pair( counter, &Role::ChooseBuilding ) );
 			*currentRole->getPlayer() << machiavelli::indent << "[" + counter + "] Bouw een gebouw" << machiavelli::rn;
 		}
 		if( !currentRole->UsedAction() )
