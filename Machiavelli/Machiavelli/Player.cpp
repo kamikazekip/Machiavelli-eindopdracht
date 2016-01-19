@@ -64,7 +64,13 @@ vector<shared_ptr<Building>> Player::getTableBuildings()
 	return table;
 }
 
-void Player::removeTableBuilding(shared_ptr<Building> buildings)
+void Player::removeTableBuilding(shared_ptr<Building> building)
 {
-	table.erase(remove(table.begin(), table.end(), buildings), table.end());
+	table.erase(remove(table.begin(), table.end(), building), table.end());
+}
+
+void Player::buildBuilding( shared_ptr<Building> building )
+{
+	hand.erase( remove( hand.begin(), hand.end(), building ), hand.end() );
+	table.push_back( building );
 }

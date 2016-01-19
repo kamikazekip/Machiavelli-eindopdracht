@@ -36,7 +36,8 @@ public:
 	int getGold();
 	vector<shared_ptr<Building>> getBuildings();
 	vector<shared_ptr<Building>> getTableBuildings();
-	void removeTableBuilding(shared_ptr < Building> buildings);
+	void removeTableBuilding(shared_ptr <Building> building);
+	void buildBuilding( shared_ptr<Building> building );
 
 	const Player& operator<<( const char c ) const;
 	const Player& operator<<( const char* message ) const;

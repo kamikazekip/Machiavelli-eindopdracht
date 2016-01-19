@@ -40,7 +40,7 @@ void Game::handleCommand( ClientCommand command, shared_ptr<Player> player )
 	}
 	else
 	{
-		*player << "Sorry, " << player->get_name() << ", we must wait until there are exactly 2 players in the game!" << machiavelli::endl;
+		*player << "Sorry, " << player->get_name() << ", maar we moeten wachten totdat er exact 2 spelers in het spel zijn!" << machiavelli::endl;
 	} 
 }
 
@@ -232,7 +232,7 @@ void Game::handleCurrentRole( )
 	gameState = GameState_In_Game;
 	if( currentRole->UsedPassive() )
 		currentRole->PassiveAction();
-	if( currentRole->UsedAction() && currentRole->UsedStandardAction() )
+	if( currentRole->UsedAction() && currentRole->UsedStandardAction() && currentRole->UsedBuildAction() )
 	{
 		broadcast( "De beurt van de " + currentRole->getName() + " is voorbij!" + machiavelli::rn );
 		nextRole();
@@ -252,7 +252,7 @@ void Game::handleCurrentRole( )
 			roleFunctions.insert( make_pair( counter, &Role::ChooseBuildingCards ) );
 			*currentRole->getPlayer() << machiavelli::indent << "[" + counter + "] Neem 2 bouwkaarten en leg er 1 af" << machiavelli::rn;
 		}
-		else
+		else if( !currentRole->UsedBuildAction() )
 		{
 			counter = itos( stoi( counter ) + 1 );
 			roleFunctions.insert( make_pair( counter, &Role::ChooseBuilding ) );
@@ -264,6 +264,13 @@ void Game::handleCurrentRole( )
 			roleFunctions.insert( make_pair( counter, &Role::SpecialAction ) );
 			*currentRole->getPlayer() << machiavelli::indent << "[" + counter + "] Maak gebruik van de karaktereigenschap van de " << currentRole->getName() << machiavelli::rn;
 		}
+		if( currentRole->UsedStandardAction() && currentRole->UsedAction() )
+		{
+			counter = itos( stoi( counter ) + 1 );
+			roleFunctions.insert( make_pair( counter, &Role::NextRole ) );
+			*currentRole->getPlayer() << machiavelli::indent << "[" + counter + "] beurt beëindigen" << machiavelli::rn;
+		}
+
 		*currentRole->getPlayer() << machiavelli::endl;
 	}	
 }
@@ -277,6 +284,7 @@ void Game::nextRole()
 	if( roleIt != roles.end() )
 	{
 		currentRole = *roleIt;
+		turn = currentRole->getPlayer();
 		broadcast( "De " + currentRole->getName() + " is nu aan de beurt!" + machiavelli::rn);
 		if( currentRole->HasPlayer() )
 		{

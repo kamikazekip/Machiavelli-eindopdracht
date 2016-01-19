@@ -52,7 +52,7 @@ void Role::ChooseBuilding()
 	game->setGameState( GameState_In_Role_Building );
 	vector<shared_ptr<Building>> options = player->getBuildings();
 
-	*player << "Welk gebouw wil je bouwen?" << machiavelli::rn;
+	*player << "Welk gebouw wil je bouwen? Je hebt " << game->itos(player->getGold()) << " goud" << machiavelli::rn;
 	*player << machiavelli::indent << "[0] bouwen annuleren" << machiavelli::rn;
 	for( size_t c = 0; c < options.size(); c++ )
 	{
@@ -66,18 +66,43 @@ void Role::ChooseBuilding()
 void Role::Build( string chosenOption )
 {
 	if( chosenOption == "0" )
-	{
 		game->handleCurrentRole();
-	}
 	else
 	{
 		map<string, shared_ptr<Building>>::iterator result = buildingOptions.find( chosenOption );
 		if( result != buildingOptions.end() )
 		{
 			shared_ptr<Building> buildingToBuild = result->second;
-			if( player->getGold() );
+			if( player->getGold() >= buildingToBuild->getPrice() )
+			{
+				player->addGold( buildingToBuild->getPrice() * -1 );
+				player->buildBuilding( buildingToBuild );
+				game->broadcast( player->get_name() + " heeft een " + buildingToBuild->getTextRepresentation() + " gebouwd en heeft nog " 
+							   + game->itos(player->getGold()) + " goud over!" + machiavelli::rn );
+				usedBuildAction = true;
+				game->handleCurrentRole();
+			}
+			else
+			{
+				*player << "Dit gebouw is te duur! Je hebt nog maar " << player->getGold() << " goud!" << machiavelli::rn;
+				ChooseBuilding();
+			}
+		}
+		else
+		{
+			*player << chosenOption << " was niet een van de opties! kies alstublieft opnieuw!" << machiavelli::rn;
+			ChooseBuilding();
 		}
 	}
+}
+
+void Role::NextRole()
+{
+	usedAction = true;
+	usedPassive = true;
+	usedBuildAction = true;
+	usedStandardAction = true;
+	game->handleCurrentRole();
 }
 
 bool Role::HasPlayer()

@@ -26,6 +26,7 @@ public:
 	virtual void PassiveAction();
 	virtual void ChooseBuilding();
 	virtual void Build( string );
+	virtual void NextRole();
 	bool HasPlayer();
 	shared_ptr<Player> getPlayer();
 	string getName();
