@@ -44,6 +44,8 @@ void Wizard::tradeCardsWithPlayer(string roleOption)
 	player->addBuildings(otherHand);
 	otherPlayer->clearHand();
 	otherPlayer->addBuildings(myHand);
+	game->broadcast( player->get_name() + " heeft zijn bouwkaarten omgeruild met " + otherPlayer->get_name() + "!" + machiavelli::rn );
+	game->handleCurrentRole();
 }
 
 void Wizard::tradeCardsWithStack(string DEZESTRINGDOETNIKS)
@@ -51,10 +53,13 @@ void Wizard::tradeCardsWithStack(string DEZESTRINGDOETNIKS)
 	int amount = player->getBuildings().size();
 	player->clearHand();
 	player->addBuildings(game->getBuildingsFromStack(amount));
+	game->broadcast( player->get_name() + " heeft zijn bouwkaarten omgeruild met het dek!" + machiavelli::rn );
+	game->handleCurrentRole();
 }
 
 void Wizard::PlayerChoseOption(string chosenOption)
 {
 	wizard_function result = wizardConnections.at(chosenOption);
 	(this->*(result))(chosenOption);
+
 }

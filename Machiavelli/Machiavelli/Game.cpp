@@ -233,6 +233,13 @@ void Game::startPlayRound()
 {
 	turn = roles.at(0)->getPlayer();
 	currentRole = roles.at(0);
+
+	if( !currentRole->HasPlayer() )
+	{
+		broadcast( "De " + currentRole->getName() + " is niet gekozen deze ronde!" + machiavelli::rn );
+		nextRole();
+	}
+		
 	broadcast( "De " + currentRole->getName() + " is nu aan de beurt!" + machiavelli::endl );
 	handleCurrentRole( );
 }
