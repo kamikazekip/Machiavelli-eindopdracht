@@ -11,7 +11,8 @@ Wizard::~Wizard()
 {
 }
 
-void Wizard::Action()
+void Wizard::SpecialAction()
 {
+	Role::SpecialAction();
 	*player << "Met wie wil je je bouwkaarten wisselen? Of wil je je bouwkaarten inwisselen voor nieuwe?";
 }

@@ -299,3 +299,8 @@ void Game::setGameState( GameState newState )
 {
 	gameState = newState;
 }
+
+vector<shared_ptr<Role>> Game::getRoles()
+{
+	return roles;
+}

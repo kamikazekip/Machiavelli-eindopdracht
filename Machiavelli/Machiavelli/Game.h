@@ -73,4 +73,5 @@ public:
 	void setNewKing( shared_ptr<Player> newKing );
 	void setGameState( GameState gameState );
 	vector<shared_ptr<Building>> getBuildingsFromStack( int amount );
+	vector<shared_ptr<Role>> getRoles();
 };

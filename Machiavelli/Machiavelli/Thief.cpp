@@ -11,7 +11,8 @@ Thief::~Thief()
 {
 }
 
-void Thief::Action()
+void Thief::SpecialAction()
 {
+	Role::SpecialAction();
 	*player << "Wie zou je graag willen bestelen?";
 }
