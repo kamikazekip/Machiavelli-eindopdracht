@@ -7,5 +7,9 @@ public:
 	Architect( shared_ptr<Game> game );
 	~Architect();
 	void PassiveAction();
+	void Build( string building );
+	void DoneBuilding();
+private: 
+	int buildingCounter;
 };
 
