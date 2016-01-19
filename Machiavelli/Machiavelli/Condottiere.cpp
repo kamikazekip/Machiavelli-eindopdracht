@@ -26,11 +26,11 @@ void Condottiere::PassiveAction()
 
 void Condottiere::SpecialAction()
 {
-	Role::SpecialAction();
+	/*Role::SpecialAction();
 	*player << "Welk gebouw wil je afbranden?" << machiavelli::rn;
 	for (int i = 0; i < game->getPlayers().size(); i++)
 	{
-		if (game->getRoles().at(i)->getPlayer() != this->player)
+		if (game->getPlayers().at(i) != this->player)
 		{
 			ostringstream oss;
 			oss << i;
@@ -38,9 +38,10 @@ void Condottiere::SpecialAction()
 			*player << machiavelli::indent << "[" + oss.str() + "] " << game->getRoles().at(i)->getName() << machiavelli::rn;
 		}
 	}
-	*player << machiavelli::endl;
+	*player << machiavelli::endl;*/
 }
 
 void Condottiere::PlayerChoseOption(string chosenOption)
 {
+
 }

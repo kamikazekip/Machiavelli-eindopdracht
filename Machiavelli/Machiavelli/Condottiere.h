@@ -10,6 +10,6 @@ public:
 	void SpecialAction();
 	void PlayerChoseOption(string chosenOption);
 private:
-	map<string, shared_ptr<Role>> condottiereConnections;
+	//map<string, shared_ptr<Role>> condottiereConnections;
 };
 

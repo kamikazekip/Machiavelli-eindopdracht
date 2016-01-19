@@ -23,7 +23,7 @@ void Wizard::SpecialAction()
 			ostringstream oss;
 			oss << i;
 			wizardConnections.insert(make_pair(oss.str(),&Wizard::tradeCardsWithPlayer));
-			*player << machiavelli::indent << "[" + oss.str() + "] " << game->getPlayers.at(i)->getName() << machiavelli::rn;
+			*player << machiavelli::indent << "[" + oss.str() + "] " << game->getPlayers().at(i)->get_name() << machiavelli::rn;
 		}
 		index = i;
 	}
