@@ -123,7 +123,15 @@ void Game::broadcast( string message )
 
 void Game::look( shared_ptr<Player> player  )
 {
-	cout << player->get_name() << endl;
+	for (int i = 0; i < players.size(); i++)
+	{
+		shared_ptr<Player> tempPlayer = players.at(i);
+		*player << tempPlayer->get_name() << " heeft " << itos(tempPlayer->getGold()) << " en de volgende gebouwen:" << machiavelli::rn;
+		for (int o = 0; o < tempPlayer->getTableBuildings().size(); o++)
+		{
+			*player << tempPlayer->getTableBuildings().at(o)->getTextRepresentation() << machiavelli::rn;
+		}
+	}
 }
 
 void Game::gameStart()
