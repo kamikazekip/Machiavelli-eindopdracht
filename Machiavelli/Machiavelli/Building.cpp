@@ -59,3 +59,8 @@ int Building::getPrice()
 {
 	return price;
 }
+
+int Building::getScore()
+{
+	return price;
+}

@@ -79,3 +79,13 @@ void Player::buildBuilding( shared_ptr<Building> building )
 	hand.erase( remove( hand.begin(), hand.end(), building ), hand.end() );
 	table.push_back( building );
 }
+
+int Player::countScore()
+{
+	int score = 0;
+	for (int i = 0; i < getTableBuildings().size(); i++)
+	{
+		score = score + getTableBuildings().at(i)->getScore();
+	}
+	return score;
+}

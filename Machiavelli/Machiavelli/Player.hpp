@@ -39,8 +39,7 @@ public:
 	vector<shared_ptr<Building>> getTableBuildings();
 	void removeTableBuilding(shared_ptr <Building> building);
 	void buildBuilding( shared_ptr<Building> building );
-	
-
+	int countScore();
 	const Player& operator<<( const char c ) const;
 	const Player& operator<<( const char* message ) const;
 	const Player& operator<<( const string& message ) const;
