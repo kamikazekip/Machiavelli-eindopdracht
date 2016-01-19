@@ -75,5 +75,5 @@ public:
 	vector<shared_ptr<Building>> getBuildingsFromStack( int amount );
 	vector<shared_ptr<Role>> getRoles();
 	void handleCurrentRole();
-	void getPlayers();
+	vector<shared_ptr<Player>> getPlayers();
 };
