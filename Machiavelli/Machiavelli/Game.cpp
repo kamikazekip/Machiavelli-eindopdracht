@@ -320,3 +320,8 @@ vector<shared_ptr<Role>> Game::getRoles()
 {
 	return roles;
 }
+
+vector<shared_ptr<Player>> Game::getPlayers()
+{
+	return players;
+}
