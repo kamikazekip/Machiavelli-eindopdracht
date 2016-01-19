@@ -48,3 +48,8 @@ std::string Building::getTextRepresentation()
 	std::string text = name + " (" + colorString + ", " + oss.str() + "):";
 	return text;
 }
+
+std::string Building::getName()
+{
+	return name;
+}

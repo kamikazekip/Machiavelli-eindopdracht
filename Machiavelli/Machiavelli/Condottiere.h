@@ -1,5 +1,6 @@
 #pragma once
 #include "Role.h"
+#include <map>
 
 class Condottiere : public Role
 {
@@ -10,6 +11,6 @@ public:
 	void SpecialAction();
 	void PlayerChoseOption(string chosenOption);
 private:
-	//map<string, shared_ptr<Role>> condottiereConnections;
+	map<string, shared_ptr<Building>> condottiereConnections;
 };
 

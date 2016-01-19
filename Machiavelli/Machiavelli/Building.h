@@ -18,5 +18,6 @@ public:
 	Color getColor();
 	void setDescription( std::string description );
 	std::string getTextRepresentation();
+	std::string getName();
 };
 

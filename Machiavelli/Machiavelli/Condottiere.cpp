@@ -1,6 +1,6 @@
 #include "Condottiere.h"
 #include "Game.h"
-
+#include "Player.hpp"
 
 Condottiere::Condottiere( shared_ptr<Game> game ) :Role( game )
 {
@@ -26,22 +26,32 @@ void Condottiere::PassiveAction()
 
 void Condottiere::SpecialAction()
 {
-	/*Role::SpecialAction();
+	Role::SpecialAction();
 	*player << "Welk gebouw wil je afbranden?" << machiavelli::rn;
 	for (int i = 0; i < game->getPlayers().size(); i++)
 	{
-		if (game->getPlayers().at(i) != this->player)
+		shared_ptr<Player> otherPlayer = game->getPlayers().at(i);
+		if (otherPlayer != this->player)
 		{
-			ostringstream oss;
-			oss << i;
-			condottiereConnections.insert(make_pair(oss.str(), game->getRoles().at(i)));
-			*player << machiavelli::indent << "[" + oss.str() + "] " << game->getRoles().at(i)->getName() << machiavelli::rn;
+			for (int o = 0; o < otherPlayer->getTableBuildings().size(); o++)
+			{
+				ostringstream oss;
+				oss << o;
+				condottiereConnections.insert(make_pair(oss.str(), otherPlayer->getTableBuildings().at(o)));
+				*player << machiavelli::indent << "[" + oss.str() + "] " << otherPlayer->getTableBuildings().at(o)->getTextRepresentation() << machiavelli::rn;
+			}			
 		}
 	}
-	*player << machiavelli::endl;*/
+	*player << machiavelli::endl;
 }
 
 void Condottiere::PlayerChoseOption(string chosenOption)
 {
-
+	shared_ptr<Building> destroyedBuilding = condottiereConnections.at(chosenOption);
+	game->broadcast("De condotierre heeft het " + destroyedBuilding->getName() + " afgebrand!");
+	for (int i = 0; i < game->getPlayers().size(); i++)
+	{
+		shared_ptr<Player> otherPlayer = game->getPlayers().at(i);
+		otherPlayer->removeTableBuilding(destroyedBuilding);
+	}
 }
