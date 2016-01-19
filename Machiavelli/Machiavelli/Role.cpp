@@ -40,6 +40,11 @@ void Role::PassiveAction()
 	usedPassive = true;
 }
 
+void Role::Build()
+{
+
+}
+
 bool Role::HasPlayer()
 {
 	if (player)

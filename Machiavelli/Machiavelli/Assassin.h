@@ -6,6 +6,6 @@ class Assassin : public Role
 public:
 	Assassin(shared_ptr<Game> game);
 	~Assassin();
-	void Action();
+	void SpecialAction();
 };
 

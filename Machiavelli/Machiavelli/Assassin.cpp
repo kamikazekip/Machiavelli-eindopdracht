@@ -11,7 +11,7 @@ Assassin::~Assassin()
 {
 }
 
-void Assassin::Action()
+void Assassin::SpecialAction()
 {
 	*player << "Wie zou je graag willen vermoorden?";
 }

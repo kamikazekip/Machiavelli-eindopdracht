@@ -22,6 +22,7 @@ public:
 	virtual void ChooseGold();
 	virtual void ChooseBuildingCards();
 	virtual void PassiveAction();
+	virtual void Build();
 	bool HasPlayer();
 	shared_ptr<Player> getPlayer();
 	string getName();
