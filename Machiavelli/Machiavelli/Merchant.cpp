@@ -16,7 +16,7 @@ void Merchant::PassiveAction()
 {
 	Role::PassiveAction();
 	player->addGold(1);
-	for (int i = 0; i < player->getBuildings().size(); i++)
+	for (int i = 0; i < player->getTableBuildings().size(); i++)
 	{
 		if (player->getBuildings().at(i)->getColor() == Green)
 		{

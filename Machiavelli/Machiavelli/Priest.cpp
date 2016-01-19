@@ -18,7 +18,7 @@ Priest::~Priest()
 void Priest::PassiveAction()
 {
 	Role::PassiveAction();
-	for (int i = 0; i < player->getBuildings().size(); i++)
+	for (int i = 0; i < player->getTableBuildings().size(); i++)
 	{
 		if (player->getBuildings().at(i)->getColor() == Blue)
 		{

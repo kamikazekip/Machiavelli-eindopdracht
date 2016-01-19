@@ -14,7 +14,7 @@ void King::PassiveAction()
 {
 	Role::PassiveAction();
 	game->setNewKing(player);
-	for (int i = 0; i < player->getBuildings().size(); i++)
+	for (int i = 0; i < player->getTableBuildings().size(); i++)
 	{
 		if (player->getBuildings().at(i)->getColor() == Yellow)
 		{
