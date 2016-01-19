@@ -13,15 +13,18 @@ Condottiere::~Condottiere()
 
 void Condottiere::PassiveAction()
 {
+	int counter = 0;
 	Role::PassiveAction();
 	for (int i = 0; i < player->getTableBuildings().size(); i++)
 	{
 		if (player->getBuildings().at(i)->getColor() == Red)
 		{
+			counter++;
 			player->addGold(1);
 		}
 	}
-
+	string counterStr = game->itos( counter );
+	game->broadcast( player->get_name() + " ( de condottiere ) heeft " + counterStr + " goud ontvangen omdat hij " + counterStr + " rode gebouwen heeft gebouwd!" );
 }
 
 void Condottiere::SpecialAction()

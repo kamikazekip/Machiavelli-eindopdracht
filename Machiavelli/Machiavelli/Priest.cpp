@@ -18,11 +18,13 @@ Priest::~Priest()
 
 void Priest::PassiveAction()
 {
+	int counter = 0;
 	Role::PassiveAction();
 	for (int i = 0; i < player->getTableBuildings().size(); i++)
 	{
 		if (player->getBuildings().at(i)->getColor() == Blue)
 		{
+			counter++;
 			player->addGold(1);
 		}
 	}
@@ -30,4 +32,7 @@ void Priest::PassiveAction()
 	{
 		player->getTableBuildings().at(i)->canBeDestroyed = false;
 	}
+
+	string counterStr = game->itos( counter );
+	game->broadcast( player->get_name() + " ( de prediker ) heeft " + counterStr + " goud ontvangen omdat hij " + counterStr + " blauwe gebouwen heeft gebouwd!" );
 }
