@@ -30,7 +30,6 @@ public:
 	void set_name(const string& new_name) { name = new_name; }
 	vector<shared_ptr<Building>> table;
 	void addBuildings(vector<shared_ptr<Building>> buildings);
-	void addBuilding( shared_ptr<Building> building );
 	void addGold( int newGold );
 	vector<shared_ptr<Building>> getBuildings();
 

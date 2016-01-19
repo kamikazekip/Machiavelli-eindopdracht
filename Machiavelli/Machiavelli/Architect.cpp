@@ -13,5 +13,5 @@ Architect::~Architect()
 void Architect::PassiveAction()
 {
 	Role::PassiveAction();
-	
+	player->addBuildings(game->getBuildingsFromStack(2));
 }
