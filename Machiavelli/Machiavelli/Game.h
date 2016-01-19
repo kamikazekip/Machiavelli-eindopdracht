@@ -70,5 +70,7 @@ public:
 	void removePlayer( shared_ptr<Player> player );
 	void broadcast( string message );
 	void look( shared_ptr<Player> player );
+	void setNewKing( shared_ptr<Player> newKing );
+	vector<shared_ptr<Building>> getBuildingsFromStack( int amount );
 };
 

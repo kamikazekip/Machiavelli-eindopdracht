@@ -64,8 +64,7 @@ void Game::addPlayer( shared_ptr<Player> player )
 	broadcast( message );
 
 	/* Initialise the player */
-	vector<shared_ptr<Building>> hand ( buildingStack.end() - 4, buildingStack.end() );
-	buildingStack.erase( buildingStack.end() - 4, buildingStack.end() );
+	vector<shared_ptr<Building>> hand = getBuildingsFromStack( 4 );
 	player->addBuildings( hand );
 	int newGold = 2;
 	player->addGold( newGold );
@@ -202,6 +201,7 @@ void Game::startPlayRound()
 	gameState = GameState_In_Game;
 	turn = roles.at(0)->getPlayer();
 	currentRole = roles.at(0);
+	broadcast( "De " + currentRole->getName() + " is nu aan de beurt!" + machiavelli::endl );
 	handleRole( currentRole );
 }
 
@@ -224,7 +224,7 @@ void Game::handleRole( shared_ptr<Role> role )
 		else
 		{
 			*role->getPlayer() << "Kies een van de volgende acties!" << machiavelli::rn;
-			*role->getPlayer() << machiavelli::indent << "[look] Bekijk het goud en gebouwen van de tegenstander ( en maak dan een keuze )" << machiavelli::rn;
+			*role->getPlayer() << machiavelli::indent << "[look] Bekijk het goud en gebouwen van de tegenstander" << machiavelli::rn;
 			string counter = "0";
 			if( !role->UsedStandardAction() )
 			{
@@ -269,4 +269,16 @@ void Game::cheat( shared_ptr<Player> player )
 	broadcast(message);
 	broadcast( "Het spel begint nu!" + machiavelli::rn + machiavelli::endl  );
 	startPlayRound();
+}
+
+void Game::setNewKing( shared_ptr<Player> newKing )
+{
+
+}
+
+vector<shared_ptr<Building>> Game::getBuildingsFromStack( int amount )
+{
+	vector<shared_ptr<Building>> buildings ( buildingStack.end() - 2, buildingStack.end() );
+	buildingStack.erase( buildingStack.end() - 4, buildingStack.end() );
+	return buildings;
 }
