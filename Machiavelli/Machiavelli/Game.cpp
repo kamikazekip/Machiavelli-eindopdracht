@@ -295,7 +295,10 @@ void Game::nextRole()
 		}
 		else if( currentRole->stolen )
 		{
-			/* TODO IMPLEMENTEER DIEF */
+			broadcast("De " + currentRole->getName() + " is bestolen verliest nu zijn goud!" + machiavelli::rn);
+			int gold = currentRole->getPlayer()->getGold();
+			roles[1]->getPlayer()->addGold(gold);
+			currentRole->getPlayer()->addGold(gold*-1);
 		}
 		else
 			handleCurrentRole();

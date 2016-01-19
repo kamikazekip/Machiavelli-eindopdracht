@@ -31,5 +31,5 @@ void Thief::SpecialAction()
 void Thief::PlayerChoseOption(string chosenOption)
 {
 	*player << "Je hebt de " << thiefConnections.at(chosenOption)->getName() << " gekozen!" << machiavelli::endl;
-	// ZET DIE ENE BOOLEAN
+	thiefConnections.at(chosenOption)->stolen = true;
 }
