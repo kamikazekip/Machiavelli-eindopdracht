@@ -13,7 +13,7 @@ Role::~Role()
 {
 }
 
-void Role::Action()
+void Role::SpecialAction()
 {
 	usedAction = true;
 }
