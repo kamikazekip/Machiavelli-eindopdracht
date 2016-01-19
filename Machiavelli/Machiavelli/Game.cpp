@@ -152,9 +152,11 @@ void Game::chooseRoles()
 {
 	broadcast( king->get_name() + " heeft de koningskaart." + machiavelli::rn + king->get_name() + " zal starten door een rol te kiezen." + machiavelli::rn + machiavelli::endl );
 	shared_ptr<Game> gamePointer { this };
-	shared_ptr<RoleFactory> roleFactory = make_shared<RoleFactory>( gamePointer );
+	
 	rolePool.clear();
 	roles.clear();
+	currentRole = nullptr;
+	shared_ptr<RoleFactory> roleFactory = make_shared<RoleFactory>( gamePointer );
 	rolePool = roleFactory->getRoles();
 	roles = roleFactory->getRoles();
 	random_shuffle( rolePool.begin(), rolePool.end() );
@@ -245,9 +247,11 @@ void Game::startPlayRound()
 		broadcast( "De " + currentRole->getName() + " is niet gekozen deze ronde!" + machiavelli::rn );
 		nextRole();
 	}
-		
-	broadcast( "De " + currentRole->getName() + " is nu aan de beurt!" + machiavelli::endl );
-	handleCurrentRole( );
+	else
+	{
+		broadcast( "De " + currentRole->getName() + " is nu aan de beurt!" + machiavelli::endl );
+		handleCurrentRole();
+	}
 }
 
 void Game::handleCurrentRole( )

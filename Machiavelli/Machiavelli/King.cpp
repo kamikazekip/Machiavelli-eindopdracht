@@ -25,5 +25,5 @@ void King::PassiveAction()
 		}
 	}
 	string counterStr = game->itos( counter );
-	game->broadcast( player->get_name() + " ( de koning ) heeft " + counterStr + " goud ontvangen omdat hij " + counterStr + " gele gebouwen heeft gebouwd!" );
+	game->broadcast( player->get_name() + " ( de koning ) heeft " + counterStr + " goud ontvangen omdat hij " + counterStr + " gele gebouwen heeft gebouwd!" + machiavelli::rn );
 }
