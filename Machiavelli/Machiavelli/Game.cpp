@@ -199,18 +199,73 @@ void Game::nextSegment() {
 
 void Game::startPlayRound()
 {
+	gameState = GameState_In_Game;
 	turn = roles.at(0)->getPlayer();
 	currentRole = roles.at(0);
+	handleRole( currentRole );
+}
+
+void Game::handleRole( shared_ptr<Role> role )
+{
+	if( !role->HasPlayer() )
+	{
+		broadcast( "De " + role->getName() + " is niet gekozen deze ronde!" + machiavelli::rn );
+		nextRole();
+	}
+	else
+	{
+		if( role->UsedPassive() )
+			role->PassiveAction();
+		if( role->UsedAction() && role->UsedStandardAction() )
+		{
+			broadcast( "De beurt van de " + role->getName() + " is voorbij!" + machiavelli::rn );
+			nextRole();
+		}
+		else
+		{
+			*role->getPlayer() << "Kies een van de volgende acties!" << machiavelli::rn;
+			*role->getPlayer() << machiavelli::indent << "[look] Bekijk het goud en gebouwen van de tegenstander ( en maak dan een keuze )" << machiavelli::rn;
+			string counter = "0";
+			if( !role->UsedStandardAction() )
+			{
+				roleFunctions.insert( std::make_pair( counter, &Role::ChooseGold ) );
+				*role->getPlayer() << machiavelli::indent << "[" + counter + "] Neem 2 goudstukken" << machiavelli::rn;
+				int counterInt = stoi( counter );
+				counterInt++;
+				ostringstream oss;
+				oss << counterInt;
+				counter = oss.str();;
+				roleFunctions.insert( std::make_pair( counter, &Role::ChooseBuildingCards ) );
+				*role->getPlayer() << machiavelli::indent << "[" + counter + "] Neem 2 bouwkaarten en leg er 1 af" << machiavelli::rn;
+			}
+			if( !role->UsedAction() )
+			{
+				int counterInt = stoi( counter );
+				counterInt++;
+				ostringstream oss;
+				oss << counterInt;
+				counter = oss.str();;
+				roleFunctions.insert( std::make_pair( counter, &Role::SpecialAction ) );
+				*role->getPlayer() << machiavelli::indent << "[" + counter + "] Maak gebruik van de karaktereigenschap van de " << role->getName() << machiavelli::rn;
+			}
+			*role->getPlayer() << machiavelli::endl;
+		}
+	}	
+}
+
+void Game::nextRole()
+{
+
 }
 
 void Game::cheat( shared_ptr<Player> player )
 {
-	rolePool[0]->setPlayer( king );
-	rolePool[1]->setPlayer( king );
-	rolePool[2]->setPlayer( otherPlayer );
-	rolePool[3]->setPlayer( otherPlayer );
-	string message = "Cheat geactiveerd! " + king->get_name() + " is de " + rolePool[0]->getName() + " en de " + rolePool[1]->getName() + "!" + machiavelli::rn
-		+ otherPlayer->get_name() + " is de " + rolePool[2]->getName() + " en de " + rolePool[3]->getName() + "!";
+	roles[0]->setPlayer( king );
+	roles[1]->setPlayer( king );
+	roles[2]->setPlayer( otherPlayer );
+	roles[3]->setPlayer( otherPlayer );
+	string message = "Cheat geactiveerd! " + king->get_name() + " is de " + roles[0]->getName() + " en de " + roles[1]->getName() + "!" + machiavelli::rn
+		+ otherPlayer->get_name() + " is de " + roles[2]->getName() + " en de " + roles[3]->getName() + "!";
 	broadcast(message);
 	broadcast( "Het spel begint nu!" + machiavelli::rn + machiavelli::endl  );
 	startPlayRound();
