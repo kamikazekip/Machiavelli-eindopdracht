@@ -8,7 +8,6 @@
 #include <memory>
 #include "Role.h"
 
-class Game;
 using namespace std;
 
 class RoleFactory

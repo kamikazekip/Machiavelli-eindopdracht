@@ -3,8 +3,8 @@
 #include <memory>
 #include <string>
 
-class Game;
 using namespace std;
+class Game;
 
 class Role
 {
@@ -16,10 +16,14 @@ private:
 public:
 	Role( shared_ptr<Game> game );
 	~Role();
-	void virtual Action();
+	virtual void Action();
 	void setNameTurn(string name, int turn);
+	virtual void GetGold();
+	virtual void GetBuildingCards();
+	virtual void PassiveAction();
+	bool HasPlayer();
+	shared_ptr<Player> getPlayer();
 	string getName();
 	void setPlayer(shared_ptr<Player> player);
-	shared_ptr<Player> getPlayer();
 };
 

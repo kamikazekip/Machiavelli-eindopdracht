@@ -7,7 +7,6 @@
 #include "Wizard.h"
 #include "Architect.h"
 #include "Merchant.h"
-#include "Game.h"
 
 RoleFactory::RoleFactory( shared_ptr<Game> game )
 {

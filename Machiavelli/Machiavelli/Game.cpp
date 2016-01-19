@@ -119,7 +119,6 @@ void Game::chooseRoles()
 {
 	shared_ptr<Game> gamePointer { this };
 	std::shared_ptr<RoleFactory> roleFactory = std::make_shared<RoleFactory>( gamePointer );
-
 	rolePool = roleFactory->getRoles();
 	roles = roleFactory->getRoles();
 	std::random_shuffle( rolePool.begin(), rolePool.end() );

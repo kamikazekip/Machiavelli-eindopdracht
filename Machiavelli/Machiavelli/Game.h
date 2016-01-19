@@ -44,6 +44,7 @@ private:
 	vector<shared_ptr<Role>> rolePool;
 	vector<pair<sequence_function, shared_ptr<Player>>> sequence;
 	shared_ptr<Role> currentRole;
+
 	GameState gameState;
 
 	void chooseOption( ClientCommand command );

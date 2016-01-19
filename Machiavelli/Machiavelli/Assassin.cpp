@@ -2,7 +2,7 @@
 #include "Game.h"
 
 
-Assassin::Assassin(shared_ptr<Game> game) : Role(game)
+Assassin::Assassin( shared_ptr<Game> game ) :Role( game )
 {
 }
 

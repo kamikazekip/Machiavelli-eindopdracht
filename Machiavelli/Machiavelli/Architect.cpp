@@ -3,7 +3,6 @@
 
 Architect::Architect( shared_ptr<Game> game ) :Role(game)
 {
-	game->broadcast("Architect meldt zich!");
 }
 
 
