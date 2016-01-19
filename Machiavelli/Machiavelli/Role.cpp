@@ -24,13 +24,13 @@ void Role::setNameTurn(string name, int turn)
 	this->turn = turn;
 }
 
-void Role::GetGold()
+void Role::ChooseGold()
 {
 	usedStandardAction = true;
 	player->addGold(2);
 }
 
-void Role::GetBuildingCards()
+void Role::ChooseBuildingCards()
 {
 	usedStandardAction = true;
 }

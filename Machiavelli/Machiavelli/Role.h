@@ -19,8 +19,8 @@ public:
 	~Role();
 	virtual void Action();
 	void setNameTurn(string name, int turn);
-	virtual void GetGold();
-	virtual void GetBuildingCards();
+	virtual void ChooseGold();
+	virtual void ChooseBuildingCards();
 	virtual void PassiveAction();
 	bool HasPlayer();
 	shared_ptr<Player> getPlayer();
