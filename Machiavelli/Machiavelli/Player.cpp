@@ -5,7 +5,7 @@
 //  Created by Bob Polis on 23-11-15.
 //  Copyright © 2015 Avans Hogeschool, 's-Hertogenbosch. All rights reserved.
 //
-
+#include <algorithm> 
 #include "Player.hpp"
 #include <Windows.h>
 using namespace std;
@@ -32,6 +32,16 @@ void Player::addBuildings( vector<shared_ptr<Building>> buildings )
 {
 	for( int c = 0; c < buildings.size(); c++ )
 		hand.push_back( buildings.at( c ) );
+}
+
+void Player::removeBuilding(shared_ptr<Building> buildings)
+{
+	hand.erase(remove(hand.begin(), hand.end(), buildings), hand.end());
+}
+
+void Player::clearHand()
+{
+	hand.clear();
 }
 
 void Player::addGold( int newGold )

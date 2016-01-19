@@ -14,5 +14,22 @@ Thief::~Thief()
 void Thief::SpecialAction()
 {
 	Role::SpecialAction();
-	*player << "Wie zou je graag willen bestelen?";
+	*player << "Van wie wil je het goud hebben?" << machiavelli::rn;
+	for (int i = 0; i < game->getRoles().size(); i++)
+	{
+		if (game->getRoles().at(i)->getPlayer() != this->player)
+		{
+			ostringstream oss;
+			oss << i;
+			thiefConnections.insert(make_pair(oss.str(), game->getRoles().at(i)));
+			*player << machiavelli::indent << "[" + oss.str() + "] " << game->getRoles().at(i)->getName() << machiavelli::rn;
+		}
+	}
+	*player << machiavelli::endl;
+}
+
+void Thief::PlayerChoseOption(string chosenOption)
+{
+	*player << "Je hebt de " << thiefConnections.at(chosenOption)->getName() << " gekozen!" << machiavelli::endl;
+	// ZET DIE ENE BOOLEAN
 }

@@ -290,8 +290,8 @@ void Game::setNewKing( shared_ptr<Player> newKing )
 
 vector<shared_ptr<Building>> Game::getBuildingsFromStack( int amount )
 {
-	vector<shared_ptr<Building>> buildings ( buildingStack.end() - 2, buildingStack.end() );
-	buildingStack.erase( buildingStack.end() - 4, buildingStack.end() );
+	vector<shared_ptr<Building>> buildings ( buildingStack.end() - amount, buildingStack.end() );
+	buildingStack.erase( buildingStack.end() - amount, buildingStack.end() );
 	return buildings;
 }
 
