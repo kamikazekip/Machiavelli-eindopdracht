@@ -17,7 +17,7 @@ protected:
 public:
 	Role( shared_ptr<Game> game );
 	~Role();
-	virtual void Action();
+	virtual void SpecialAction();
 	void setNameTurn(string name, int turn);
 	virtual void ChooseGold();
 	virtual void ChooseBuildingCards();
