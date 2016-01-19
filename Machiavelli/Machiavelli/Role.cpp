@@ -60,3 +60,13 @@ void Role::setPlayer(shared_ptr<Player> player)
 {
 	this->player = player;
 }
+
+bool Role::UsedAction()
+{	
+	return usedAction;
+}
+
+bool Role::UsedStandardAction()
+{
+	return usedStandardAction;
+}

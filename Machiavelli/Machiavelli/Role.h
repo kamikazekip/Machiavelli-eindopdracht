@@ -8,11 +8,12 @@ class Game;
 
 class Role
 {
-private:
+protected:
 	shared_ptr<Player> player;
 	string name;
 	int turn;
 	shared_ptr<Game> game;
+	bool usedAction, usedStandardAction;
 public:
 	Role( shared_ptr<Game> game );
 	~Role();
@@ -25,5 +26,7 @@ public:
 	shared_ptr<Player> getPlayer();
 	string getName();
 	void setPlayer(shared_ptr<Player> player);
+	bool UsedAction();
+	bool UsedStandardAction();
 };
 

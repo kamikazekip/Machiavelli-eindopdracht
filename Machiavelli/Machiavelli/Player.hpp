@@ -32,6 +32,7 @@ public:
 	void addBuildings(vector<shared_ptr<Building>> buildings);
 	void addBuilding( shared_ptr<Building> building );
 	void addGold( int newGold );
+	vector<shared_ptr<Building>> getBuildings();
 
 	const Player& operator<<( const char c ) const;
 	const Player& operator<<( const char* message ) const;
@@ -40,6 +41,7 @@ private:
 	string name;
 	int gold;
 	vector<shared_ptr<Building>> hand;
+	vector<shared_ptr<Building>> buildings;
 };
 
 #endif /* Player_hpp */
