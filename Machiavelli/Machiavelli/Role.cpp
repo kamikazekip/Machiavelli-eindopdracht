@@ -4,6 +4,8 @@
 Role::Role( shared_ptr<Game> game )
 {
 	this->game = game;
+	usedAction = false;
+	usedStandardAction = false;
 }
 
 
