@@ -88,3 +88,8 @@ bool Role::UsedBuildAction()
 {
 	return usedBuildAction;
 }
+
+void Role::PlayerChoseOption( string chosenOption )
+{
+
+}

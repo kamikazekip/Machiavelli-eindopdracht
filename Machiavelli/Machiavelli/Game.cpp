@@ -29,13 +29,9 @@ void Game::handleCommand( ClientCommand command, shared_ptr<Player> player )
 			map<string, game_function>::iterator result = commands.find( command.get_cmd() );
 
 			if( result != commands.end() )
-			{
 				( this->*( result->second ) )( player );
-			}
-			else if ( gameState == GameState_Choosing_Role || gameState == GameState_Removing_Role )
-			{
+			else if ( gameState != GameState_PreGame )
 				chooseOption( command );
-			}
 		}
 		else
 		{
@@ -50,11 +46,27 @@ void Game::handleCommand( ClientCommand command, shared_ptr<Player> player )
 
 void Game::chooseOption( ClientCommand command )
 {
-	map<string, pair<role_chosing_function, shared_ptr<Role>>>::iterator result = roleOptions.find( command.get_cmd() );
-
-	if( result != roleOptions.end() )
+	if( gameState == GameState_Choosing_Role || gameState == GameState_Removing_Role )
 	{
-		( this->*( result->second.first ) )( result->second.second );
+		map<string, pair<role_chosing_function, shared_ptr<Role>>>::iterator result = roleOptions.find( command.get_cmd() );
+
+		if( result != roleOptions.end() )
+		{
+			( this->*( result->second.first ) )( result->second.second );
+		}
+	}
+	if( gameState == GameState_In_Game )
+	{
+		map<string, role_function>::iterator result = roleFunctions.find( command.get_cmd() );
+		if( result != roleFunctions.end() )
+		{
+			role_function func = result->second;
+			( (*currentRole).*( func ) )( );
+		}
+	}
+	if( gameState == GameState_In_Role )
+	{
+		currentRole->PlayerChoseOption( command.get_cmd() );
 	}
 }
 
@@ -161,7 +173,7 @@ void Game::pickRole( shared_ptr<Player> player)
 	{
 		ostringstream oss;
 		oss << c;
-		*turn << "  [" + oss.str() + "] " << rolePool.at(c)->getName() << machiavelli::rn;
+		*turn << machiavelli::indent << "[" + oss.str() + "] " << rolePool.at(c)->getName() << machiavelli::rn;
 		roleOptions.insert(std::make_pair(oss.str(), std::make_pair(&Game::pickedRole, rolePool.at(c))));
 	}
 	*turn << machiavelli::endl;
@@ -177,7 +189,7 @@ void Game::removeRole( shared_ptr<Player> player )
 	{
 		ostringstream oss;
 		oss << c;
-		*turn << "  [" + oss.str() + "] " << rolePool.at(c)->getName() << machiavelli::rn;
+		*turn << machiavelli::indent <<"[" + oss.str() + "] " << rolePool.at(c)->getName() << machiavelli::rn;
 		roleOptions.insert(std::make_pair(oss.str(), std::make_pair(&Game::removedRole, rolePool.at(c))));
 	}
 	*turn << machiavelli::endl;
@@ -198,7 +210,6 @@ void Game::nextSegment() {
 
 void Game::startPlayRound()
 {
-	gameState = GameState_In_Game;
 	turn = roles.at(0)->getPlayer();
 	currentRole = roles.at(0);
 	broadcast( "De " + currentRole->getName() + " is nu aan de beurt!" + machiavelli::endl );
@@ -207,6 +218,7 @@ void Game::startPlayRound()
 
 void Game::handleRole( shared_ptr<Role> role )
 {
+	gameState = GameState_In_Game;
 	if( !role->HasPlayer() )
 	{
 		broadcast( "De " + role->getName() + " is niet gekozen deze ronde!" + machiavelli::rn );
@@ -234,7 +246,7 @@ void Game::handleRole( shared_ptr<Role> role )
 				counterInt++;
 				ostringstream oss;
 				oss << counterInt;
-				counter = oss.str();;
+				counter = oss.str();
 				roleFunctions.insert( std::make_pair( counter, &Role::ChooseBuildingCards ) );
 				*role->getPlayer() << machiavelli::indent << "[" + counter + "] Neem 2 bouwkaarten en leg er 1 af" << machiavelli::rn;
 			}
@@ -281,4 +293,9 @@ vector<shared_ptr<Building>> Game::getBuildingsFromStack( int amount )
 	vector<shared_ptr<Building>> buildings ( buildingStack.end() - 2, buildingStack.end() );
 	buildingStack.erase( buildingStack.end() - 4, buildingStack.end() );
 	return buildings;
+}
+
+void Game::setGameState( GameState newState )
+{
+	gameState = newState;
 }

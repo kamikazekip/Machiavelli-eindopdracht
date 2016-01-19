@@ -29,7 +29,7 @@ namespace machiavelli
 	const string rn { "\r\n" };
 	const string indent{ "  " };
 }
-enum GameState { GameState_PreGame, GameState_Choosing_Role, GameState_Removing_Role, GameState_In_Game };
+enum GameState { GameState_PreGame, GameState_Choosing_Role, GameState_Removing_Role, GameState_In_Game, GameState_In_Role };
 
 class Game
 {
@@ -71,6 +71,6 @@ public:
 	void broadcast( string message );
 	void look( shared_ptr<Player> player );
 	void setNewKing( shared_ptr<Player> newKing );
+	void setGameState( GameState gameState );
 	vector<shared_ptr<Building>> getBuildingsFromStack( int amount );
 };
-

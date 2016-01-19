@@ -15,3 +15,8 @@ void Assassin::SpecialAction()
 {
 	*player << "Wie zou je graag willen vermoorden?";
 }
+
+void Assassin::PlayerChoseOption( string chosenOption )
+{
+
+}
