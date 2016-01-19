@@ -30,8 +30,7 @@ void Thief::SpecialAction()
 
 void Thief::PlayerChoseOption(string chosenOption)
 {
-	*player << "Je hebt de " << thiefConnections.at(chosenOption)->getName() << " gekozen!" << machiavelli::endl;
 	thiefConnections.at(chosenOption)->stolen = true;
-	game->broadcast( "De dief heeft de " + thiefConnections.at(chosenOption)->getName() + " bestolen!" + machiavelli::rn );
+	game->broadcast( player->get_name() +  " ( de dief ) heeft de " + thiefConnections.at(chosenOption)->getName() + " bestolen!" + machiavelli::rn );
 	game->handleCurrentRole();
 }

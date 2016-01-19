@@ -32,6 +32,6 @@ void Assassin::PlayerChoseOption( string chosenOption )
 {
 	shared_ptr<Role> murderedRole = murderConnections.at( chosenOption );
 	murderConnections.at( chosenOption )->murdered = true;
-	game->broadcast( player->get_name() + " heeft de " + murderedRole->getName() + " vermoord!" + machiavelli::rn );
+	game->broadcast( player->get_name() + " ( de moordenaar ) heeft de " + murderedRole->getName() + " vermoord!" + machiavelli::rn );
 	game->handleCurrentRole();
 }
