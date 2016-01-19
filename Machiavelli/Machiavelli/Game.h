@@ -29,7 +29,8 @@ namespace machiavelli
 	const string rn { "\r\n" };
 	const string indent{ "  " };
 }
-enum GameState { GameState_PreGame, GameState_Choosing_Role, GameState_Removing_Role, GameState_In_Game, GameState_In_Role, GameState_In_Role_Building };
+enum GameState {	GameState_PreGame, GameState_Choosing_Role, GameState_Removing_Role, GameState_In_Game, 
+					GameState_In_Role, GameState_In_Role_Building, GameState_In_Role_Choosing_Building };
 
 class Game
 {
@@ -77,4 +78,5 @@ public:
 	void handleCurrentRole();
 	string itos( int i );
 	vector<shared_ptr<Player>> getPlayers();
+	bool isPriest( shared_ptr<Player> player );
 };

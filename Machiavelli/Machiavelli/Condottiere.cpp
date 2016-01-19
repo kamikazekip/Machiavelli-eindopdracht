@@ -29,6 +29,7 @@ void Condottiere::PassiveAction()
 
 void Condottiere::SpecialAction()
 {
+	int counter = 0;
 	Role::SpecialAction();
 	*player << "Welk gebouw wil je afbranden?" << machiavelli::rn;
 	for (int i = 0; i < game->getPlayers().size(); i++)
@@ -38,8 +39,12 @@ void Condottiere::SpecialAction()
 		{
 			for (int o = 0; o < otherPlayer->getTableBuildings().size(); o++)
 			{
-				if (otherPlayer->getTableBuildings().at(o)->getPrice() - 1 <= player->getGold() && otherPlayer->getTableBuildings().at(o)->canBeDestroyed)
+				shared_ptr<Building> building = otherPlayer->getTableBuildings().at( o );
+				int price = building->getPrice() - 1;
+
+				if (price <= player->getGold() && !game->isPriest(otherPlayer))
 				{
+					counter++;
 					ostringstream oss;
 					oss << o;
 					condottiereConnections.insert(make_pair(oss.str(), otherPlayer->getTableBuildings().at(o)));
@@ -48,14 +53,23 @@ void Condottiere::SpecialAction()
 			}			
 		}
 	}
-	*player << machiavelli::endl;
+	if( counter == 0 )
+	{
+		*player << "Sorry! er zijn geen gebouwen aanwezig die je kunt verbranden!" << machiavelli::rn;
+		game->handleCurrentRole();
+	}
+	else
+	{
+		*player << machiavelli::endl;
+	}
+	
 }
 
 void Condottiere::PlayerChoseOption(string chosenOption)
 {
 	shared_ptr<Building> destroyedBuilding = condottiereConnections.at(chosenOption);
 	player->addGold((destroyedBuilding->getPrice() - 1)*-1);
-	game->broadcast("De condotierre heeft het " + destroyedBuilding->getName() + " afgebrand!");
+	game->broadcast("De condotierre heeft een " + destroyedBuilding->getName() + " afgebrand!" + machiavelli::rn);
 	for (int i = 0; i < game->getPlayers().size(); i++)
 	{
 		shared_ptr<Player> otherPlayer = game->getPlayers().at(i);

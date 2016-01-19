@@ -39,7 +39,17 @@ void Role::ChooseGold()
 void Role::ChooseBuildingCards()
 {
 	usedStandardAction = true;
-	game->handleCurrentRole();
+	buildingOptions.clear();
+	game->setGameState( GameState_In_Role_Choosing_Building );
+	vector<shared_ptr<Building>> pickedFromDeck = game->getBuildingsFromStack( 2 );
+	*player << "Welk gebouw wil je pakken? De andere wordt vernietigd!" << machiavelli::rn;
+	for( size_t c = 0; c < pickedFromDeck.size(); c++ )
+	{
+		string counter = game->itos( c );
+		buildingOptions.insert( make_pair( counter, pickedFromDeck.at( c ) ) );
+		*player << machiavelli::indent << "[" + counter + "] " << pickedFromDeck.at( c )->getTextRepresentation() << machiavelli::rn;
+	}
+	*player << machiavelli::endl;
 }
 
 void Role::PassiveAction()
@@ -47,7 +57,7 @@ void Role::PassiveAction()
 	usedPassive = true;
 }
 
-void Role::ChooseBuilding()
+void Role::ChooseBuildingToBuild()
 {
 	buildingOptions.clear();
 	game->setGameState( GameState_In_Role_Building );
@@ -62,6 +72,24 @@ void Role::ChooseBuilding()
 		*player << machiavelli::indent << "[" + counter + "] " << options.at( c )->getTextRepresentation() << machiavelli::rn;
 	}
 	*player << machiavelli::endl;
+}
+
+void Role::pickBuilding( string choice )
+{
+	map<string, shared_ptr<Building>>::iterator result = buildingOptions.find( choice );
+	if( result != buildingOptions.end() )
+	{
+		shared_ptr<Building> chosenBuilding = result->second;
+		player->addBuilding( chosenBuilding );
+		usedStandardAction = true;
+		*player << "Je hebt het volgende gebouw aan je hand toegevoegd: " << chosenBuilding->getTextRepresentation() << machiavelli::rn;
+		game->handleCurrentRole();
+	}
+	else
+	{
+		*player << choice << " was niet een van de opties! kies alstublieft opnieuw!" << machiavelli::rn;
+		ChooseBuildingCards();
+	}
 }
 
 void Role::Build( string chosenOption )
@@ -85,13 +113,13 @@ void Role::Build( string chosenOption )
 			else
 			{
 				*player << "Dit gebouw is te duur! Je hebt nog maar " << player->getGold() << " goud!" << machiavelli::rn;
-				ChooseBuilding();
+				ChooseBuildingToBuild();
 			}
 		}
 		else
 		{
 			*player << chosenOption << " was niet een van de opties! kies alstublieft opnieuw!" << machiavelli::rn;
-			ChooseBuilding();
+			ChooseBuildingToBuild();
 		}
 	}
 }

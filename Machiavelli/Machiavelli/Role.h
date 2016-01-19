@@ -24,7 +24,8 @@ public:
 	virtual void ChooseGold();
 	virtual void ChooseBuildingCards();
 	virtual void PassiveAction();
-	virtual void ChooseBuilding();
+	virtual void ChooseBuildingToBuild();
+	virtual void pickBuilding( string choice );
 	virtual void Build( string );
 	virtual void NextRole();
 	bool HasPlayer();

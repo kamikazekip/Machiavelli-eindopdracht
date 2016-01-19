@@ -70,13 +70,11 @@ void Game::chooseOption( ClientCommand command )
 		}
 	}
 	else if( gameState == GameState_In_Role )
-	{
 		currentRole->PlayerChoseOption( command.get_cmd() );
-	}
 	else if( gameState == GameState_In_Role_Building )
-	{
 		currentRole->Build( command.get_cmd() );
-	}
+	else if( gameState == GameState_In_Role_Choosing_Building )
+		currentRole->pickBuilding( command.get_cmd() );
 }
 
 void Game::addPlayer( shared_ptr<Player> player )
@@ -147,12 +145,12 @@ void Game::gameStart()
 	broadcast( machiavelli::rn + "Het spel heeft nu 2 spelers, het spel begint! \r" );
 	king = players[0];
 	otherPlayer = players[1];
-	broadcast(king->get_name() + " heeft de koningskaart." + machiavelli::rn + king->get_name() + " zal starten door een rol te kiezen." + machiavelli::rn + machiavelli::endl);
 	chooseRoles();
 }
 
 void Game::chooseRoles()
 {
+	broadcast( king->get_name() + " heeft de koningskaart." + machiavelli::rn + king->get_name() + " zal starten door een rol te kiezen." + machiavelli::rn + machiavelli::endl );
 	shared_ptr<Game> gamePointer { this };
 	shared_ptr<RoleFactory> roleFactory = make_shared<RoleFactory>( gamePointer );
 	rolePool.clear();
@@ -280,7 +278,7 @@ void Game::handleCurrentRole( )
 		else if( !currentRole->UsedBuildAction() )
 		{
 			counter = itos( stoi( counter ) + 1 );
-			roleFunctions.insert( make_pair( counter, &Role::ChooseBuilding ) );
+			roleFunctions.insert( make_pair( counter, &Role::ChooseBuildingToBuild ) );
 			*currentRole->getPlayer() << machiavelli::indent << "[" + counter + "] Bouw een gebouw" << machiavelli::rn;
 		}
 		if( !currentRole->UsedAction() )
@@ -394,4 +392,9 @@ string Game::itos( int i )
 vector<shared_ptr<Player>> Game::getPlayers()
 {
 	return players;
+}
+
+bool Game::isPriest( shared_ptr<Player> player )
+{
+	return ( roles.at( 4 )->getPlayer() == player );
 }

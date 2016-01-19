@@ -30,6 +30,7 @@ public:
 	void set_name(const string& new_name) { name = new_name; }
 	
 	void addBuildings(vector<shared_ptr<Building>> buildings);
+	void addBuilding( shared_ptr<Building> building );
 	void removeBuilding(shared_ptr < Building> buildings);
 	void clearHand();
 	void addGold( int newGold );
@@ -38,6 +39,7 @@ public:
 	vector<shared_ptr<Building>> getTableBuildings();
 	void removeTableBuilding(shared_ptr <Building> building);
 	void buildBuilding( shared_ptr<Building> building );
+	
 
 	const Player& operator<<( const char c ) const;
 	const Player& operator<<( const char* message ) const;

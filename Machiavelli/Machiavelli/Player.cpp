@@ -34,6 +34,11 @@ void Player::addBuildings( vector<shared_ptr<Building>> buildings )
 		hand.push_back( buildings.at( c ) );
 }
 
+void Player::addBuilding( shared_ptr<Building> building )
+{
+	hand.push_back( building );
+}
+
 void Player::removeBuilding(shared_ptr<Building> buildings)
 {
 	hand.erase(remove(hand.begin(), hand.end(), buildings), hand.end());
