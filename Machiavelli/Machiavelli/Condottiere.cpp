@@ -58,4 +58,5 @@ void Condottiere::PlayerChoseOption(string chosenOption)
 		shared_ptr<Player> otherPlayer = game->getPlayers().at(i);
 		otherPlayer->removeTableBuilding(destroyedBuilding);
 	}
+	game->handleCurrentRole();
 }
