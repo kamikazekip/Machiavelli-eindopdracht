@@ -8,6 +8,7 @@ Building::Building( std::string name, int price, std::string color )
 	this->price = price;
 	this->name = name;
 	colorString = color;
+	canBeDestroyed = true;
 }
 
 
