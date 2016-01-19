@@ -129,9 +129,11 @@ void Game::look( shared_ptr<Player> player  )
 		*player << tempPlayer->get_name() << " heeft " << itos(tempPlayer->getGold()) << " goud, en de volgende gebouwen:" << machiavelli::rn;
 		for (int o = 0; o < tempPlayer->getTableBuildings().size(); o++)
 		{
-			*player << tempPlayer->getTableBuildings().at(o)->getTextRepresentation() << machiavelli::rn;
+			*player << machiavelli::indent << tempPlayer->getTableBuildings().at(o)->getTextRepresentation() << machiavelli::rn;
 		}
 	}
+	*player << machiavelli::rn;
+	handleCurrentRole();
 }
 
 void Game::gameStart()
