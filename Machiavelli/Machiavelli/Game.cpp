@@ -10,7 +10,7 @@ Game::Game()
 	buildingStack = buildingFactory->getStartBuildings();
 	//Shuffle the card deck
 	std::random_shuffle(buildingStack.begin(), buildingStack.end());
-	commands.insert( pair<string, game_function>( "inventory", &Game::look ) );
+	commands.insert( pair<string, game_function>( "look", &Game::look ) );
 	commands.insert( pair<string, game_function>( "cheat", &Game::cheat ) );
 }
 
@@ -137,6 +137,8 @@ void Game::chooseRoles()
 	*king << "De " << rolePool[rolePool.size() - 1]->getName() << " is weg gelegd. " << machiavelli::rn;
 	rolePool.erase( rolePool.end()-1, rolePool.end() );
 
+	sequence.clear();
+
 	sequence.push_back( make_pair( &Game::pickRole,		king ) );
 	sequence.push_back( make_pair( &Game::removeRole,	otherPlayer ) );
 	sequence.push_back( make_pair( &Game::pickRole,		otherPlayer ) );
@@ -190,7 +192,7 @@ void Game::removeRole( shared_ptr<Player> player )
 		ostringstream oss;
 		oss << c;
 		*turn << machiavelli::indent <<"[" + oss.str() + "] " << rolePool.at(c)->getName() << machiavelli::rn;
-		roleOptions.insert(std::make_pair(oss.str(), std::make_pair(&Game::removedRole, rolePool.at(c))));
+		roleOptions.insert( make_pair(oss.str(), make_pair(&Game::removedRole, rolePool.at(c))));
 	}
 	*turn << machiavelli::endl;
 }
@@ -213,61 +215,75 @@ void Game::startPlayRound()
 	turn = roles.at(0)->getPlayer();
 	currentRole = roles.at(0);
 	broadcast( "De " + currentRole->getName() + " is nu aan de beurt!" + machiavelli::endl );
-	handleRole( currentRole );
+	handleCurrentRole( );
 }
 
-void Game::handleRole( shared_ptr<Role> role )
+void Game::handleCurrentRole( )
 {
 	gameState = GameState_In_Game;
-	if( !role->HasPlayer() )
+	if( currentRole->UsedPassive() )
+		currentRole->PassiveAction();
+	if( currentRole->UsedAction() && currentRole->UsedStandardAction() )
 	{
-		broadcast( "De " + role->getName() + " is niet gekozen deze ronde!" + machiavelli::rn );
+		broadcast( "De beurt van de " + currentRole->getName() + " is voorbij!" + machiavelli::rn );
 		nextRole();
 	}
 	else
 	{
-		if( role->UsedPassive() )
-			role->PassiveAction();
-		if( role->UsedAction() && role->UsedStandardAction() )
+		*currentRole->getPlayer() << "Kies een van de volgende acties!" << machiavelli::rn;
+		*currentRole->getPlayer() << machiavelli::indent << "[bekijken] Bekijk het goud en gebouwen van de tegenstander" << machiavelli::rn;
+		string counter = "0";
+		if( !currentRole->UsedStandardAction() )
 		{
-			broadcast( "De beurt van de " + role->getName() + " is voorbij!" + machiavelli::rn );
-			nextRole();
+			roleFunctions.insert( std::make_pair( counter, &Role::ChooseGold ) );
+			*currentRole->getPlayer() << machiavelli::indent << "[" + counter + "] Neem 2 goudstukken" << machiavelli::rn;
+			int counterInt = stoi( counter );
+			counterInt++;
+			ostringstream oss;
+			oss << counterInt;
+			counter = oss.str();
+			roleFunctions.insert( std::make_pair( counter, &Role::ChooseBuildingCards ) );
+			*currentRole->getPlayer() << machiavelli::indent << "[" + counter + "] Neem 2 bouwkaarten en leg er 1 af" << machiavelli::rn;
 		}
-		else
+		if( !currentRole->UsedAction() )
 		{
-			*role->getPlayer() << "Kies een van de volgende acties!" << machiavelli::rn;
-			*role->getPlayer() << machiavelli::indent << "[look] Bekijk het goud en gebouwen van de tegenstander" << machiavelli::rn;
-			string counter = "0";
-			if( !role->UsedStandardAction() )
-			{
-				roleFunctions.insert( std::make_pair( counter, &Role::ChooseGold ) );
-				*role->getPlayer() << machiavelli::indent << "[" + counter + "] Neem 2 goudstukken" << machiavelli::rn;
-				int counterInt = stoi( counter );
-				counterInt++;
-				ostringstream oss;
-				oss << counterInt;
-				counter = oss.str();
-				roleFunctions.insert( std::make_pair( counter, &Role::ChooseBuildingCards ) );
-				*role->getPlayer() << machiavelli::indent << "[" + counter + "] Neem 2 bouwkaarten en leg er 1 af" << machiavelli::rn;
-			}
-			if( !role->UsedAction() )
-			{
-				int counterInt = stoi( counter );
-				counterInt++;
-				ostringstream oss;
-				oss << counterInt;
-				counter = oss.str();;
-				roleFunctions.insert( std::make_pair( counter, &Role::SpecialAction ) );
-				*role->getPlayer() << machiavelli::indent << "[" + counter + "] Maak gebruik van de karaktereigenschap van de " << role->getName() << machiavelli::rn;
-			}
-			*role->getPlayer() << machiavelli::endl;
+			int counterInt = stoi( counter );
+			counterInt++;
+			ostringstream oss;
+			oss << counterInt;
+			counter = oss.str();;
+			roleFunctions.insert( std::make_pair( counter, &Role::SpecialAction ) );
+			*currentRole->getPlayer() << machiavelli::indent << "[" + counter + "] Maak gebruik van de karaktereigenschap van de " << currentRole->getName() << machiavelli::rn;
 		}
+		*currentRole->getPlayer() << machiavelli::endl;
 	}	
 }
 
 void Game::nextRole()
 {
+	/* Get the next role */
+	vector<shared_ptr<Role>>::iterator roleIt = next( find( roles.begin(), roles.end(), currentRole ), 1 );
 
+	/* If we are not at the end */
+	if( roleIt != roles.end() )
+	{
+		currentRole = *roleIt;
+		broadcast( "De " + currentRole->getName() + " is nu aan de beurt!" + machiavelli::rn);
+		if( !currentRole->HasPlayer() )
+		{
+			broadcast( "De " + currentRole->getName() + " is niet gekozen deze ronde!" + machiavelli::rn );
+			nextRole();
+		}
+		else if( currentRole->murdered )
+		{
+			broadcast( "De " + currentRole->getName() + " is vermoord en kan dus niets doen deze ronde!" + machiavelli::rn );
+			nextRole();
+		}
+		else
+			handleCurrentRole();
+	}
+	else
+		broadcast( "Speelronde voorbij!" + machiavelli::endl );
 }
 
 void Game::cheat( shared_ptr<Player> player )

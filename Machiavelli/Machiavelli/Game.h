@@ -46,6 +46,7 @@ private:
 	unique_ptr<BuildingFactory> buildingFactory;
 	vector<shared_ptr<Role>> rolePool;
 	vector<pair<sequence_function, shared_ptr<Player>>> sequence;
+	vector<shared_ptr<Role>> roleSequence;
 	shared_ptr<Role> currentRole;
 
 	GameState gameState;
@@ -58,7 +59,6 @@ private:
 	void removeRole( shared_ptr<Player> player );
 	void pickRole( shared_ptr<Player> player );
 	void nextSegment();
-	void handleRole( shared_ptr<Role> role );
 	void nextRole();
 	void startPlayRound();
 	void cheat( shared_ptr<Player> player );
@@ -74,4 +74,5 @@ public:
 	void setGameState( GameState gameState );
 	vector<shared_ptr<Building>> getBuildingsFromStack( int amount );
 	vector<shared_ptr<Role>> getRoles();
+	void handleCurrentRole();
 };

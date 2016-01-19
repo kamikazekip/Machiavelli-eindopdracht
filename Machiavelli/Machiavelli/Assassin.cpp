@@ -30,6 +30,8 @@ void Assassin::SpecialAction()
 
 void Assassin::PlayerChoseOption( string chosenOption )
 {
-	*player << "Je hebt de " << murderConnections.at( chosenOption )->getName() << " gekozen!" << machiavelli::endl;
-	murderConnections.at( chosenOption )->setPlayer( nullptr );
+	shared_ptr<Role> murderedRole = murderConnections.at( chosenOption );
+	murderConnections.at( chosenOption )->murdered = true;
+	game->broadcast( player->get_name() + " heeft de " + murderedRole->getName() + " vermoord!" + machiavelli::rn );
+	game->handleCurrentRole();
 }
