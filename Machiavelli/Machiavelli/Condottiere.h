@@ -6,5 +6,6 @@ class Condottiere : public Role
 public:
 	Condottiere(shared_ptr<Game> game);
 	~Condottiere();
+	void PassiveAction();
 };
 
