@@ -16,14 +16,14 @@ void Wizard::SpecialAction()
 	Role::SpecialAction();
 	*player << "Met wie wil je je bouwkaarten wisselen? Of wil je je bouwkaarten inwisselen voor nieuwe?" << machiavelli::rn;
 	int index;
-	for (int i = 0; i < game->getRoles().size(); i++)
+	for (int i = 0; i < game->getPlayers().size(); i++)
 	{
-		if (game->getRoles().at(i)->getPlayer() != this->player)
+		if (game->getPlayers().at(i) != this->player)
 		{
 			ostringstream oss;
 			oss << i;
 			wizardConnections.insert(make_pair(oss.str(),&Wizard::tradeCardsWithPlayer));
-			*player << machiavelli::indent << "[" + oss.str() + "] " << game->getRoles().at(i)->getName() << machiavelli::rn;
+			*player << machiavelli::indent << "[" + oss.str() + "] " << game->getPlayers.at(i)->getName() << machiavelli::rn;
 		}
 		index = i;
 	}
@@ -37,13 +37,13 @@ void Wizard::SpecialAction()
 void Wizard::tradeCardsWithPlayer(string roleOption)
 {
 	int optionRole = stoi(roleOption);
-	shared_ptr<Role> role = game->getRoles().at(optionRole);
+	shared_ptr<Player> otherPlayer = game->getPlayers().at(optionRole);
 	vector<shared_ptr<Building>> myHand = player->getBuildings();
-	vector<shared_ptr<Building>> otherHand = role->getPlayer()->getBuildings();
+	vector<shared_ptr<Building>> otherHand = otherPlayer->getBuildings();
 	player->clearHand();
 	player->addBuildings(otherHand);
-	role->getPlayer()->clearHand();
-	role->getPlayer()->addBuildings(myHand);
+	otherPlayer->clearHand();
+	otherPlayer->addBuildings(myHand);
 }
 
 void Wizard::tradeCardsWithStack(string DEZESTRINGDOETNIKS)
@@ -55,6 +55,6 @@ void Wizard::tradeCardsWithStack(string DEZESTRINGDOETNIKS)
 
 void Wizard::PlayerChoseOption(string chosenOption)
 {
-	//*player << "Je hebt de " << wizardConnections.at(chosenOption)->getName() << " gekozen!" << machiavelli::endl;
-	// ZET DIE ENE BOOLEAN
+	wizard_function result = wizardConnections.at(chosenOption);
+	(this->*(result))(chosenOption);
 }

@@ -51,5 +51,15 @@ void Player::addGold( int newGold )
 
 vector<shared_ptr<Building>> Player::getBuildings()
 {
-	return buildings;
+	return hand;
+}
+
+vector<shared_ptr<Building>> Player::getTableBuildings()
+{
+	return table;
+}
+
+void Player::removeTableBuilding(shared_ptr<Building> buildings)
+{
+	table.erase(remove(table.begin(), table.end(), buildings), table.end());
 }
