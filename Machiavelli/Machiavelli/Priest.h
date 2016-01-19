@@ -6,5 +6,6 @@ class Priest : public Role
 public:
 	Priest(shared_ptr<Game> game);
 	~Priest();
+	void PassiveAction();
 };
 
