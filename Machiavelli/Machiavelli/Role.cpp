@@ -21,6 +21,30 @@ void Role::setNameTurn(string name, int turn)
 	this->turn = turn;
 }
 
+void Role::GetGold()
+{
+	player->addGold(2);
+}
+
+void Role::GetBuildingCards()
+{
+
+}
+
+void Role::PassiveAction()
+{
+
+}
+
+bool Role::HasPlayer()
+{
+	if (player)
+	{
+		return true;
+	}
+	return false;
+}
+
 string Role::getName()
 {
 	return name;
