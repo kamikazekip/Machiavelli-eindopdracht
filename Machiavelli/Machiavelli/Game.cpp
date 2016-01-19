@@ -155,6 +155,8 @@ void Game::chooseRoles()
 {
 	shared_ptr<Game> gamePointer { this };
 	shared_ptr<RoleFactory> roleFactory = make_shared<RoleFactory>( gamePointer );
+	rolePool.clear();
+	roles.clear();
 	rolePool = roleFactory->getRoles();
 	roles = roleFactory->getRoles();
 	random_shuffle( rolePool.begin(), rolePool.end() );
@@ -336,7 +338,10 @@ void Game::nextRole()
 			handleCurrentRole();
 	}
 	else
-		broadcast( "Speelronde voorbij!" + machiavelli::endl );
+	{
+		broadcast( "Speelronde voorbij, De nieuwe speelronde begint nu!" + machiavelli::rn );
+		chooseRoles();
+	}
 }
 
 void Game::cheat( shared_ptr<Player> player )
@@ -354,7 +359,12 @@ void Game::cheat( shared_ptr<Player> player )
 
 void Game::setNewKing( shared_ptr<Player> newKing )
 {
-	king = newKing; // :'D
+	
+	if( newKing == otherPlayer )
+	{
+		otherPlayer = king;
+		king = newKing; // :'D
+	}
 }
 
 vector<shared_ptr<Building>> Game::getBuildingsFromStack( int amount )
