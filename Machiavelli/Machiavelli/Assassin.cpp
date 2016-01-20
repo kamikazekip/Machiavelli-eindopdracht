@@ -30,8 +30,17 @@ void Assassin::SpecialAction()
 
 void Assassin::PlayerChoseOption( string chosenOption )
 {
-	shared_ptr<Role> murderedRole = murderConnections.at( chosenOption );
-	murderConnections.at( chosenOption )->murdered = true;
-	game->broadcast( player->get_name() + " ( de moordenaar ) heeft de " + murderedRole->getName() + " vermoord!" + machiavelli::rn );
-	game->handleCurrentRole();
+	map<string, shared_ptr<Role>>::iterator result = murderConnections.find( chosenOption );
+	if( result != murderConnections.end() )
+	{
+		shared_ptr<Role> roleToAssasinate = result->second;
+		roleToAssasinate->murdered = true;
+		game->broadcast( player->get_name() + " ( de moordenaar ) heeft de " + roleToAssasinate->getName() + " vermoord!" + machiavelli::rn );
+		game->handleCurrentRole();
+	}
+	else
+	{
+		*player << chosenOption << " was niet een van de opties! kies alstublieft opnieuw!" << machiavelli::rn;
+		SpecialAction();
+	}
 }

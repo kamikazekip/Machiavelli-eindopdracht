@@ -248,8 +248,8 @@ void Game::nextSegment() {
 
 void Game::startPlayRound()
 {
-	turn = roles.at(7)->getPlayer();
-	currentRole = roles.at(7);
+	turn = roles.at(0)->getPlayer();
+	currentRole = roles.at(0);
 
 	if( !currentRole->HasPlayer() )
 	{
