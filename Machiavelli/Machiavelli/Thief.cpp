@@ -17,7 +17,7 @@ void Thief::SpecialAction()
 	*player << "Van wie wil je het goud hebben?" << machiavelli::rn;
 	for (int i = 0; i < game->getRoles().size(); i++)
 	{
-		if (game->getRoles().at(i)->getPlayer() != this->player)
+		if (game->getRoles().at(i)->getPlayer() != this->player && game->getRoles().at(i)->getName() != "Moordenaar")
 		{
 			ostringstream oss;
 			oss << i;
