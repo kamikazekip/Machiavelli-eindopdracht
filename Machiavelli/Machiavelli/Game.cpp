@@ -251,9 +251,11 @@ void Game::startPlayRound()
 		broadcast( "De " + currentRole->getName() + " is niet gekozen deze ronde!" + machiavelli::rn );
 		nextRole();
 	}
-		
-	broadcast( "De " + currentRole->getName() + " is nu aan de beurt!" + machiavelli::endl );
-	handleCurrentRole( );
+	else
+	{
+		broadcast( "De " + currentRole->getName() + " is nu aan de beurt!" + machiavelli::endl );
+		handleCurrentRole();
+	}
 }
 
 void Game::handleCurrentRole( )

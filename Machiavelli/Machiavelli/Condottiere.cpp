@@ -24,7 +24,7 @@ void Condottiere::PassiveAction()
 		}
 	}
 	string counterStr = game->itos( counter );
-	game->broadcast( player->get_name() + " ( de condottiere ) heeft " + counterStr + " goud ontvangen omdat hij " + counterStr + " rode gebouwen heeft gebouwd!" );
+	game->broadcast( player->get_name() + " ( de condottiere ) heeft " + counterStr + " goud ontvangen omdat hij " + counterStr + " rode gebouwen heeft gebouwd!" + machiavelli::rn );
 }
 
 void Condottiere::SpecialAction()

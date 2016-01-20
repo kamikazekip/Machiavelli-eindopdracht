@@ -10,10 +10,7 @@ Priest::Priest( shared_ptr<Game> game ) :Role( game )
 
 Priest::~Priest()
 {
-	for (int i = 0; i < player->getTableBuildings().size(); i++)
-	{
-		player->getTableBuildings().at(i)->canBeDestroyed = true;
-	}
+
 }
 
 void Priest::PassiveAction()
@@ -31,5 +28,5 @@ void Priest::PassiveAction()
 	}
 
 	string counterStr = game->itos( counter );
-	game->broadcast( player->get_name() + " ( de prediker ) heeft " + counterStr + " goud ontvangen omdat hij " + counterStr + " blauwe gebouwen heeft gebouwd!" );
+	game->broadcast( player->get_name() + " ( de prediker ) heeft " + counterStr + " goud ontvangen omdat hij " + counterStr + " blauwe gebouwen heeft gebouwd!" + machiavelli::rn);
 }
