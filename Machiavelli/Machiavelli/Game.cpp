@@ -87,7 +87,7 @@ void Game::addPlayer( shared_ptr<Player> player )
 	/* Initialise the player */
 	vector<shared_ptr<Building>> hand = getBuildingsFromStack( 4 );
 	player->addBuildings( hand );
-	int newGold = 2000;
+	int newGold = 2;
 	player->addGold( newGold );
 
 	ostringstream oss;
@@ -390,12 +390,12 @@ void Game::checkWin()
 
 void Game::cheat( shared_ptr<Player> player )
 {
-	roles[5]->setPlayer( king );
-	roles[7]->setPlayer( king );
+	roles[0]->setPlayer( king );
+	roles[1]->setPlayer( king );
+	roles[2]->setPlayer( otherPlayer );
 	roles[3]->setPlayer( otherPlayer );
-	roles[4]->setPlayer( otherPlayer );
-	string message = "Cheat geactiveerd! " + king->get_name() + " is de " + roles[5]->getName() + " en de " + roles[7]->getName() + "!" + machiavelli::rn
-		+ otherPlayer->get_name() + " is de " + roles[3]->getName() + " en de " + roles[4]->getName() + "!";
+	string message = "Cheat geactiveerd! " + king->get_name() + " is de " + roles[0]->getName() + " en de " + roles[1]->getName() + "!" + machiavelli::rn
+		+ otherPlayer->get_name() + " is de " + roles[2]->getName() + " en de " + roles[3]->getName() + "!";
 	broadcast(message);
 	broadcast( "Het spel begint nu!" + machiavelli::rn + machiavelli::endl  );
 	startPlayRound();
