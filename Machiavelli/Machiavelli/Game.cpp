@@ -5,11 +5,12 @@
 Game::Game()
 {
 	gameState = GameState_PreGame;
+	gamePointer = shared_ptr<Game>( this );
 	srand(time(NULL));
 	buildingFactory = move(unique_ptr<BuildingFactory> { new BuildingFactory() });
 	buildingStack = buildingFactory->getStartBuildings();
 	//Shuffle the card deck
-	random_shuffle(buildingStack.begin(), buildingStack.end());
+	std::random_shuffle(buildingStack.begin(), buildingStack.end());
 	commands.insert( pair<string, game_function>( "bekijken", &Game::look ) );
 	commands.insert( pair<string, game_function>( "cheat", &Game::cheat ) );
 }
@@ -164,11 +165,10 @@ void Game::gameStart()
 void Game::chooseRoles()
 {
 	broadcast( king->get_name() + " heeft de koningskaart." + machiavelli::rn + king->get_name() + " zal starten door een rol te kiezen." + machiavelli::rn + machiavelli::endl );
-	shared_ptr<Game> gamePointer { this };
 	shared_ptr<RoleFactory> roleFactory = make_shared<RoleFactory>( gamePointer );
 	rolePool = roleFactory->getRoles();
 	roles = roleFactory->getRoles();
-	random_shuffle( rolePool.begin(), rolePool.end() );
+	std::random_shuffle( rolePool.begin(), rolePool.end() );
 
 	*king << "De " << rolePool[rolePool.size() - 1]->getName() << " is weg gelegd. " << machiavelli::rn;
 	rolePool.erase( rolePool.end()-1, rolePool.end() );
@@ -248,8 +248,8 @@ void Game::nextSegment() {
 
 void Game::startPlayRound()
 {
-	turn = roles.at(0)->getPlayer();
-	currentRole = roles.at(0);
+	turn = roles.at(7)->getPlayer();
+	currentRole = roles.at(7);
 
 	if( !currentRole->HasPlayer() )
 	{

@@ -66,6 +66,7 @@ private:
 	void checkWin();
 	void startPlayRound();
 	void cheat( shared_ptr<Player> player );
+	shared_ptr<Game> gamePointer;
 public:
 	Game();
 	~Game();
