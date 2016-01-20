@@ -15,12 +15,14 @@ void Thief::SpecialAction()
 {
 	Role::SpecialAction();
 	*player << "Van wie wil je het goud hebben?" << machiavelli::rn;
+	int index = -1;
 	for (int i = 0; i < game->getRoles().size(); i++)
 	{
 		if (game->getRoles().at(i)->getPlayer() != this->player)
 		{
+			index++;
 			ostringstream oss;
-			oss << i;
+			oss << index;
 			thiefConnections.insert(make_pair(oss.str(), game->getRoles().at(i)));
 			*player << machiavelli::indent << "[" + oss.str() + "] " << game->getRoles().at(i)->getName() << machiavelli::rn;
 		}
@@ -30,7 +32,18 @@ void Thief::SpecialAction()
 
 void Thief::PlayerChoseOption(string chosenOption)
 {
-	thiefConnections.at(chosenOption)->stolen = true;
-	game->broadcast( player->get_name() +  " ( de dief ) heeft de " + thiefConnections.at(chosenOption)->getName() + " bestolen!" + machiavelli::rn );
-	game->handleCurrentRole();
+	map<string, shared_ptr<Role>>::iterator result = thiefConnections.find( chosenOption );
+	if( result != thiefConnections.end() )
+	{
+		shared_ptr<Role> stolenRole = result->second;
+		stolenRole->stolen = true;
+		game->broadcast( player->get_name() + " ( de dief ) heeft de " + stolenRole->getName() + " bestolen!" + machiavelli::rn );
+		game->handleCurrentRole();
+	}
+	else
+	{
+		*player << chosenOption << " was niet een van de opties! kies alstublieft opnieuw!" << machiavelli::rn;
+		SpecialAction();
+	}
+	
 }

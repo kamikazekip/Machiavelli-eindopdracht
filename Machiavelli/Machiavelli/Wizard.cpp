@@ -15,18 +15,20 @@ void Wizard::SpecialAction()
 {
 	Role::SpecialAction();
 	*player << "Met wie wil je je bouwkaarten wisselen? Of wil je je bouwkaarten inwisselen voor nieuwe?" << machiavelli::rn;
-	int index;
+	int index = -1;
 	for (int i = 0; i < game->getPlayers().size(); i++)
 	{
 		if (game->getPlayers().at(i) != this->player)
 		{
+			otherPlayerIndex = i;
+			index++;
 			ostringstream oss;
-			oss << i;
+			oss << index;
 			wizardConnections.insert(make_pair(oss.str(),&Wizard::tradeCardsWithPlayer));
 			*player << machiavelli::indent << "[" + oss.str() + "] " << game->getPlayers().at(i)->get_name() << machiavelli::rn;
 		}
-		index = i;
 	}
+	index++;
 	ostringstream oss;
 	oss << index;
 	wizardConnections.insert(make_pair(oss.str(), &Wizard::tradeCardsWithStack));
@@ -34,10 +36,9 @@ void Wizard::SpecialAction()
 	*player << machiavelli::endl;
 }
 
-void Wizard::tradeCardsWithPlayer(string roleOption)
+void Wizard::tradeCardsWithPlayer()
 {
-	int optionRole = stoi(roleOption);
-	shared_ptr<Player> otherPlayer = game->getPlayers().at(optionRole);
+	shared_ptr<Player> otherPlayer = game->getPlayers().at(otherPlayerIndex);
 	vector<shared_ptr<Building>> myHand = player->getBuildings();
 	vector<shared_ptr<Building>> otherHand = otherPlayer->getBuildings();
 	player->clearHand();
@@ -48,7 +49,7 @@ void Wizard::tradeCardsWithPlayer(string roleOption)
 	game->handleCurrentRole();
 }
 
-void Wizard::tradeCardsWithStack(string DEZESTRINGDOETNIKS)
+void Wizard::tradeCardsWithStack()
 {
 	int amount = player->getBuildings().size();
 	player->clearHand();
@@ -59,7 +60,15 @@ void Wizard::tradeCardsWithStack(string DEZESTRINGDOETNIKS)
 
 void Wizard::PlayerChoseOption(string chosenOption)
 {
-	wizard_function result = wizardConnections.at(chosenOption);
-	(this->*(result))(chosenOption);
-
+	map<string, wizard_function>::iterator result = wizardConnections.find( chosenOption );
+	if( result != wizardConnections.end() )
+	{
+		wizard_function func = result->second;
+		( this->*( func ) )( );
+	}
+	else
+	{
+		*player << chosenOption << " was niet een van de opties! kies alstublieft opnieuw!" << machiavelli::rn;
+		SpecialAction();
+	}
 }

@@ -29,7 +29,7 @@ void Condottiere::PassiveAction()
 
 void Condottiere::SpecialAction()
 {
-	int counter = 0;
+	int counter = -1;
 	Role::SpecialAction();
 	*player << "Welk gebouw wil je afbranden?" << machiavelli::rn;
 	for (int i = 0; i < game->getPlayers().size(); i++)
@@ -46,14 +46,14 @@ void Condottiere::SpecialAction()
 				{
 					counter++;
 					ostringstream oss;
-					oss << o;
+					oss << counter;
 					condottiereConnections.insert(make_pair(oss.str(), otherPlayer->getTableBuildings().at(o)));
 					*player << machiavelli::indent << "[" + oss.str() + "] " << otherPlayer->getTableBuildings().at(o)->getTextRepresentation() << machiavelli::rn;
 				}
 			}			
 		}
 	}
-	if( counter == 0 )
+	if( counter == -1 )
 	{
 		*player << "Sorry! er zijn geen gebouwen aanwezig die je kunt verbranden!" << machiavelli::rn;
 		game->handleCurrentRole();
@@ -67,13 +67,22 @@ void Condottiere::SpecialAction()
 
 void Condottiere::PlayerChoseOption(string chosenOption)
 {
-	shared_ptr<Building> destroyedBuilding = condottiereConnections.at(chosenOption);
-	player->addGold((destroyedBuilding->getPrice() - 1)*-1);
-	game->broadcast("De condotierre heeft een " + destroyedBuilding->getName() + " afgebrand!" + machiavelli::rn);
-	for (int i = 0; i < game->getPlayers().size(); i++)
+	map<string, shared_ptr<Building>>::iterator result = condottiereConnections.find( chosenOption );
+	if( result != condottiereConnections.end() )
 	{
-		shared_ptr<Player> otherPlayer = game->getPlayers().at(i);
-		otherPlayer->removeTableBuilding(destroyedBuilding);
+		shared_ptr<Building> destroyedBuilding = result->second;
+		player->addGold( ( destroyedBuilding->getPrice() - 1 )*-1 );
+		game->broadcast( "De condotierre heeft een " + destroyedBuilding->getName() + " afgebrand!" + machiavelli::rn );
+		for( int i = 0; i < game->getPlayers().size(); i++ )
+		{
+			shared_ptr<Player> otherPlayer = game->getPlayers().at( i );
+			otherPlayer->removeTableBuilding( destroyedBuilding );
+		}
+		game->handleCurrentRole();
 	}
-	game->handleCurrentRole();
+	else
+	{
+		*player << chosenOption << " was niet een van de opties! kies alstublieft opnieuw!" << machiavelli::rn;
+		SpecialAction();
+	}	
 }

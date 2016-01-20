@@ -5,7 +5,7 @@ using namespace std;
 
 class Wizard;
 
-typedef void ( Wizard::*wizard_function ) (string option);
+typedef void ( Wizard::*wizard_function ) ();
 
 class Wizard : public Role
 {
@@ -16,7 +16,8 @@ public:
 	void PlayerChoseOption(string chosenOption);
 private:
 	map<string,wizard_function> wizardConnections;
-	void tradeCardsWithPlayer(string x);
-	void tradeCardsWithStack(string x);
+	void tradeCardsWithPlayer();
+	void tradeCardsWithStack();
+	int otherPlayerIndex;
 };
 
