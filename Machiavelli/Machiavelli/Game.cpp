@@ -6,10 +6,11 @@ Game::Game()
 {
 	gameState = GameState_PreGame;
 	gamePointer = shared_ptr<Game>( this );
-	srand(time(NULL));
+	
 	buildingFactory = move(unique_ptr<BuildingFactory> { new BuildingFactory() });
 	buildingStack = buildingFactory->getStartBuildings();
 	//Shuffle the card deck
+	srand(time(NULL));
 	std::random_shuffle(buildingStack.begin(), buildingStack.end());
 	commands.insert( pair<string, game_function>( "bekijken", &Game::look ) );
 	commands.insert( pair<string, game_function>( "cheat", &Game::cheat ) );
@@ -168,6 +169,7 @@ void Game::chooseRoles()
 	shared_ptr<RoleFactory> roleFactory = make_shared<RoleFactory>( gamePointer );
 	rolePool = roleFactory->getRoles();
 	roles = roleFactory->getRoles();
+	srand(time(NULL));
 	std::random_shuffle( rolePool.begin(), rolePool.end() );
 
 	*king << "De " << rolePool[rolePool.size() - 1]->getName() << " is weg gelegd. " << machiavelli::rn;

@@ -18,7 +18,7 @@ void Thief::SpecialAction()
 	int index = -1;
 	for (int i = 0; i < game->getRoles().size(); i++)
 	{
-		if (game->getRoles().at(i)->getPlayer() != this->player)
+		if (game->getRoles().at(i)->getPlayer() != this->player && game->getRoles().at(i)->getName() != "Moordenaar")
 		{
 			index++;
 			ostringstream oss;
