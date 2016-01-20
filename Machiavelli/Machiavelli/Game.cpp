@@ -140,6 +140,14 @@ void Game::look( shared_ptr<Player> player  )
 	handleCurrentRole();
 }
 
+void Game::prepareNextRound()
+{
+	roles.clear();
+	rolePool.clear();
+	currentRole = nullptr;
+	turn = nullptr;
+}
+
 void Game::gameStart()
 {
 	broadcast( machiavelli::rn + "Het spel heeft nu 2 spelers, het spel begint! \r" );
@@ -153,8 +161,6 @@ void Game::chooseRoles()
 	broadcast( king->get_name() + " heeft de koningskaart." + machiavelli::rn + king->get_name() + " zal starten door een rol te kiezen." + machiavelli::rn + machiavelli::endl );
 	shared_ptr<Game> gamePointer { this };
 	shared_ptr<RoleFactory> roleFactory = make_shared<RoleFactory>( gamePointer );
-	rolePool.clear();
-	roles.clear();
 	rolePool = roleFactory->getRoles();
 	roles = roleFactory->getRoles();
 	random_shuffle( rolePool.begin(), rolePool.end() );
@@ -342,6 +348,7 @@ void Game::nextRole()
 			return;
 		}
 		broadcast( "Speelronde voorbij, De nieuwe speelronde begint nu!" + machiavelli::rn );
+		prepareNextRound();
 		chooseRoles();
 	}
 }

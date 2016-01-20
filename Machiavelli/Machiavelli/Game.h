@@ -60,6 +60,7 @@ private:
 	void removeRole( shared_ptr<Player> player );
 	void pickRole( shared_ptr<Player> player );
 	void nextSegment();
+	void prepareNextRound();
 	void nextRole();
 	bool checkFinished();
 	void checkWin();
