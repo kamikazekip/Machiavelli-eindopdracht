@@ -35,7 +35,7 @@ enum GameState {	GameState_PreGame, GameState_Choosing_Role, GameState_Removing_
 class Game
 {
 private:
-	map<string, game_function> commands;
+	map<string, game_function> commands;  // gevuld
 	map<string, pair<role_chosing_function, shared_ptr<Role>>> roleOptions;
 	map<string, role_function> roleFunctions;
 	shared_ptr<Player> turn;

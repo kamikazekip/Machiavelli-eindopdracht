@@ -144,6 +144,10 @@ void Game::prepareNextRound()
 {
 	roles.clear();
 	rolePool.clear();
+	roleOptions.clear();
+	roleFunctions.clear();
+	sequence.clear();
+	roleSequence.clear();
 	currentRole = nullptr;
 	turn = nullptr;
 }
@@ -153,6 +157,7 @@ void Game::gameStart()
 	broadcast( machiavelli::rn + "Het spel heeft nu 2 spelers, het spel begint! \r" );
 	king = players[0];
 	otherPlayer = players[1];
+	prepareNextRound();
 	chooseRoles();
 }
 
